@@ -1,0 +1,133 @@
+{
+  "users": [
+    {
+      "email": "dhdhds@gmail.com",
+      "password": "$2a$10$5xbW0A1Ox4xHf/.4I0BwIuUk7l0pBu8R1tzzZAooWGdHs2Mg9Ah5u",
+      "id": 1
+    },
+    {
+      "email": "dhcom@gmail.com",
+      "password": "$2a$10$x9RwkekFzxard4sTle5akuayQgMD5wCTRP438FNf04kSMuwHpifv2",
+      "id": 2
+    },
+    {
+      "email": "sumansapkota0099@gmail.com",
+      "password": "$2a$10$uEUd/B1EsseqDSX3h7fXJe9eh4yfACY9ZM94KdUDGRV5ZXr8Nggfy",
+      "id": 3
+    },
+    {
+      "email": "sumansapkota09@gmail.com",
+      "password": "$2a$10$Jl7XxMwVnJSaGAxGQq2DHOXC1hrTDvmB60BoNj//RIUZuAKj6Jhue",
+      "id": 4
+    },
+    {
+      "email": "sumakota09@gmail.com",
+      "password": "$2a$10$v0TtGn/Zd1v0cYLrz6z8PefVp/47Jjw6QERardN0ZlbY3dIvQ.wXK",
+      "id": 5
+    },
+    {
+      "email": "sumakota09w@gmail.com",
+      "password": "$2a$10$V2xh/tucCwfxtLrOiDAZgOBS6asVpLvklnUTiOMVAOwU6ebiG2jea",
+      "id": 6
+    },
+    {
+      "email": "dhdhds1111@gmail.com",
+      "password": "$2a$10$SA/xQd09Ec.5pp5HqUbQ6.CFyvOXn4WlPSp5UvgDulAOmstsQUcCu",
+      "name": "Subarna",
+      "id": 7
+    },
+    {
+      "email": "sumansharma111290@gmail.com",
+      "password": "$2a$10$DBUFvk.pToYzcZb5sIPrseHkr/HL37CymX31cESCcPA0rPoatflwa",
+      "name": "Subarna",
+      "id": 8
+    }
+  ],
+  "posts": [
+    {
+      "company": "xyz",
+      "role": "sr dev",
+      "status": "offer",
+      "appliedDate": "2026-04-14T16:56:00.691Z",
+      "userID": null,
+      "updatedAt": "2026-04-14T16:56:00.691Z",
+      "id": 1
+    },
+    {
+      "company": "xyz",
+      "role": "sr dev",
+      "status": "offer",
+      "appliedDate": "2026-04-14T16:56:04.962Z",
+      "userID": null,
+      "updatedAt": "2026-04-14T16:56:04.962Z",
+      "id": 2
+    },
+    {
+      "company": "xyz",
+      "role": "sr dev",
+      "status": "offer",
+      "appliedDate": "2026-04-14T16:56:15.667Z",
+      "userID": null,
+      "updatedAt": "2026-04-14T16:56:15.667Z",
+      "id": 3
+    },
+    {
+      "company": "xyz",
+      "role": "sr dev",
+      "status": "interview",
+      "appliedDate": "2026-04-14T16:57:20.884Z",
+      "userID": null,
+      "updatedAt": "2026-04-14T16:57:20.884Z",
+      "id": 4
+    },
+    {
+      "company": "xyz1",
+      "role": "frontend dev",
+      "status": "offer",
+      "appliedDate": "2026-04-14T18:17:20.498Z",
+      "userID": null,
+      "updatedAt": "2026-04-14T18:17:20.498Z",
+      "id": 5
+    },
+    {
+      "company": "xyz1",
+      "role": "frontend dev",
+      "status": "offer",
+      "appliedDate": "2026-04-14T18:18:35.128Z",
+      "userID": null,
+      "id": 6
+    },
+    {
+      "company": "pagoda labs ",
+      "role": "QA developer",
+      "status": "applied",
+      "appliedDate": "2026-04-14T18:23:27.586Z",
+      "userID": "1",
+      "id": 7
+    },
+    {
+      "company": "",
+      "role": "",
+      "status": "",
+      "appliedDate": "2026-04-15T07:21:26.520Z",
+      "userID": "1",
+      "id": 8
+    },
+    {
+      "company": "",
+      "role": "",
+      "status": "applied",
+      "appliedDate": "2026-04-15T08:40:37.806Z",
+      "userID": "8",
+      "id": 9
+    },
+    {
+      "company": "",
+      "role": "",
+      "status": "applied",
+      "appliedDate": "2026-04-15T08:40:50.554Z",
+      "userID": "8",
+      "id": 10
+    }
+  ]
+}
