@@ -4,16 +4,18 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContextProvider } from './context/UserContext.tsx'
+import { ApplicationContextProvider } from './context/ApplicationContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  
-  <BrowserRouter>
-  <UserContextProvider>
-     <StrictMode>
-      <App />
-  </StrictMode>
 
-  </UserContextProvider>
+  <BrowserRouter>
+    <UserContextProvider>
+      <ApplicationContextProvider>
+        <StrictMode>
+          <App />
+        </StrictMode>
+      </ApplicationContextProvider>
+    </UserContextProvider>
   </BrowserRouter>
 
   ,
