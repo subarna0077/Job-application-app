@@ -128,6 +128,96 @@
       "appliedDate": "2026-04-15T08:40:50.554Z",
       "userID": "8",
       "id": 10
+    },
+    {
+      "company": "Blog-site",
+      "role": "sumakota09@gmail.com",
+      "status": "offer",
+      "appliedDate": "2026-04-15T10:15:23.448Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 11
+    },
+    {
+      "company": "vrit task 2",
+      "role": "fruntedn",
+      "status": "rejected",
+      "appliedDate": "2026-04-15T10:21:34.405Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 12
+    },
+    {
+      "company": "vrit task 3",
+      "role": "backend",
+      "status": "applied",
+      "appliedDate": "2026-04-15T10:27:18.787Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 13
+    },
+    {
+      "company": "vrit task 3",
+      "role": "fruntedn",
+      "status": "rejected",
+      "appliedDate": "2026-04-15T10:29:35.367Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 14
+    },
+    {
+      "company": "Blog-site",
+      "role": "backend",
+      "status": "interview",
+      "appliedDate": "2026-04-15T10:31:53.685Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 15
+    },
+    {
+      "company": "Blog-site",
+      "role": "backend",
+      "status": "interview",
+      "appliedDate": "2026-04-15T10:31:55.086Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 16
+    },
+    {
+      "company": "Blog-site",
+      "role": "backend",
+      "status": "interview",
+      "appliedDate": "2026-04-15T10:33:54.342Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 17
+    },
+    {
+      "company": "Blog-site",
+      "role": "backend",
+      "status": "interview",
+      "appliedDate": "2026-04-15T10:33:55.290Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 18
+    },
+    {
+      "company": "Blog-site",
+      "role": "sumakota09@gmail.com",
+      "status": "applied",
+      "appliedDate": "2026-04-15T10:53:35.372Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 19
+    },
+    {
+      "company": "Blog-site",
+      "role": "Quality Assurance",
+      "status": "applied",
+      "appliedDate": "2026-04-15T15:03:40.988Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 20
     }
   ]
 }
