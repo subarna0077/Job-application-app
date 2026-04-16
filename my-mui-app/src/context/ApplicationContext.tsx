@@ -2,10 +2,17 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import type { JobApplication } from '../types/types'
 
 
+export interface filterStatusType {
+    label: string;
+    action: ()=> void;
+}
+
+
 interface ApplicationContextType {
     applications: JobApplication[];
     refreshApplications: () => Promise<void>;
     applicationCountComputed: ApplicationCountByStatus;
+    filterByStatus: filterStatusType[]
 }
 
 export interface ApplicationCountByStatus {
@@ -38,6 +45,29 @@ export const ApplicationContextProvider = ({ children }: { children: React.React
 
     }, {...applicationCount})
 
+    const filterByStatus: filterStatusType[] = [
+        {
+            label: 'All',
+            action: ()=> applications.filter(app=> app), 
+        },
+        {
+            label: 'Applied',
+            action: ()=> applications.filter(app=> app.status=== 'applied'),
+        },
+        {
+            label: 'Interview',
+            action: ()=> applications.filter(app=> app.status === 'interview')
+        },
+        {
+            label: 'Offers',
+            action: ()=> applications.filter(app=> app.status === "offer")
+        },
+        {
+            label: 'Rejected',
+            action: ()=> applications.filter(app=> app.status === 'rejected')
+        }
+    ]
+
 
     const userID = localStorage.getItem('userId')
     const fetchUserApplication = async () => {
@@ -57,7 +87,7 @@ export const ApplicationContextProvider = ({ children }: { children: React.React
 
 
     return (
-        <ApplicationContext.Provider value={{ applications, refreshApplications: fetchUserApplication, applicationCountComputed }}>
+        <ApplicationContext.Provider value={{ applications, refreshApplications: fetchUserApplication, applicationCountComputed, filterByStatus }}>
             {children}
         </ApplicationContext.Provider>
     )

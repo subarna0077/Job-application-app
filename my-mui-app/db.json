@@ -218,6 +218,24 @@
       "userID": "8",
       "updatedAt": null,
       "id": 20
+    },
+    {
+      "company": "applied",
+      "role": "sr dev",
+      "status": "applied",
+      "appliedDate": "2026-04-16T11:27:06.083Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 21
+    },
+    {
+      "company": "sumansharma111290@gmail.com",
+      "role": "Vrit tasks",
+      "status": "interview",
+      "appliedDate": "2026-04-16T11:48:50.764Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 22
     }
   ]
 }

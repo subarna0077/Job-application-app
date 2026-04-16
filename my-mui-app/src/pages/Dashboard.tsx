@@ -1,14 +1,14 @@
-import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography, Paper , Card, Toolbar} from '@mui/material'
+import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography, Paper, Card, Toolbar } from '@mui/material'
 import { useState } from 'react'
 import { useApplicationContext } from '../context/ApplicationContext';
 import type { ApplicationCountByStatus } from '../context/ApplicationContext';
 
 
 const statsRow = [
-  {label: 'Total applied', key: 'applied', color: '#5280c9' },
-  {label: 'Interview', key: 'interview', color: '#e69f26' },
-  {label: 'Offers', key: 'offers', color: '#34ba64' },
-  {label: 'Rejected', key: 'rejected', color: '#da4c4a' }
+  { label: 'Total applied', key: 'applied', color: '#5280c9' },
+  { label: 'Interview', key: 'interview', color: '#e69f26' },
+  { label: 'Offers', key: 'offers', color: '#34ba64' },
+  { label: 'Rejected', key: 'rejected', color: '#da4c4a' }
 ]
 
 
@@ -19,7 +19,10 @@ export const Dashboard = () => {
     role: '',
     status: ''
   });
-  const { applications, refreshApplications, applicationCountComputed } = useApplicationContext()
+
+  const [activeFilter, setActiveFilter] = useState('All')
+  const { applications, refreshApplications, applicationCountComputed, filterByStatus } = useApplicationContext()
+  const filteredApplications = activeFilter === 'All' ? applications : applications.filter(app=> app.status === activeFilter.toLowerCase())
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -52,9 +55,9 @@ export const Dashboard = () => {
 
 
   return (
-    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', p: {xs: 2, md:4} }}>
+    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', p: { xs: 2, md: 4 } }}>
       <Toolbar></Toolbar>
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, mb: 3 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, mb: 3 }}>
         {statsRow.map(({ label, key, color }) => (
           <Card key={key} sx={{
             bgcolor: 'background.paper',   // ← surface
@@ -73,13 +76,41 @@ export const Dashboard = () => {
             </Typography>
             <Typography sx={{ fontFamily: '"Syne", sans-serif', fontSize: { sm: 16, md: 22, lg: 28 }, fontWeight: { sm: 400, md: 800 }, color }}>
               {applicationCountComputed[key as keyof ApplicationCountByStatus]}
-              
+
             </Typography>
-      </Card>
+          </Card>
         ))}
       </Box>
 
-  
+      <Box>
+        {filteredApplications.map(app => <Paper>
+          <Typography>{app.company}</Typography>
+          <Typography>{app.role}</Typography>
+          <Typography>{app.status}</Typography>
+        </Paper>)}
+      </Box>
+
+
+
+      <Paper sx={{ maxWidth: '400px', p: 2 }}>
+        <Typography>Filter by status</Typography>
+
+        <Box sx={{ display: 'flex' }} >
+          {filterByStatus.map(({ label, action }) => (
+            <>
+              <Button onClick={()=> setActiveFilter(label)} sx={{ fontSize: '13px' }}>
+                {label}
+              </Button>
+
+              <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', height: 8, width: 8, margin: 'auto', textAlign: 'center', bgcolor: 'background.paper', fontSize: '13px', borderRadius: '5px', border: '1px solid', borderColor: 'gray' }}>
+                {label === 'All' ? applications.length : applicationCountComputed[label.toLocaleLowerCase() as keyof ApplicationCountByStatus]}
+              </Box>
+            </>
+          ))}
+        </Box>
+      </Paper>
+
+
 
       <Box component="form" onSubmit={(e) => handleSubmit(e)}>
         <TextField label="company" value={appliedData.company} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, company: e.target.value }))} />
