@@ -5,9 +5,10 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContextProvider } from './context/UserContext.tsx'
 import { ApplicationContextProvider } from './context/ApplicationContext.tsx'
+import { ThemeContextProvider } from './context/ThemeContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-
+<ThemeContextProvider>
   <BrowserRouter>
     <UserContextProvider>
       <ApplicationContextProvider>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
       </ApplicationContextProvider>
     </UserContextProvider>
   </BrowserRouter>
+  </ThemeContextProvider>
 
   ,
 )
