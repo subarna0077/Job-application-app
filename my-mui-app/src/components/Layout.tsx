@@ -1,16 +1,21 @@
 import React from 'react'
-import { Container, AppBar, Stack, Typography, Toolbar, IconButton, Box , Avatar, Button} from '@mui/material'
+import { Container, AppBar, Paper, Typography, Toolbar, IconButton, Box , Avatar, Button} from '@mui/material'
 import {BookOnlineSharp} from '@mui/icons-material'
 import { useUserContext } from '../context/UserContext'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import { useThemeContext } from '../context/ThemeContext'
+
 
 
 const Layout = ({children}: {children: React.ReactNode}) => {
     const {logout, user} = useUserContext()
+    const {mode, toggleTheme}= useThemeContext()
   return (
-    <Container maxWidth="lg" sx={{bgcolor: 'white'}}>
+    <Container maxWidth="lg" sx={{bgcolor: 'background.default'}}>
         <AppBar>
-            <Toolbar>
-                <Stack>
+            <Toolbar disableGutters>
+                <Paper elevation={0} sx={{display: 'flex', flexDirection: 'row',p:2, justifyContent: 'space-between', width: '100%', bgcolor: 'background.paper', borderRadius: 0}} >
                     <Box sx={{display: 'flex', alignItems: 'center'
                     }}>
                         <IconButton>
@@ -19,16 +24,20 @@ const Layout = ({children}: {children: React.ReactNode}) => {
                          <Typography component='a'>JobTracker</Typography>
                     </Box>
 
-                    <Box sx={{display: 'flex'}}>
+                    <Box sx={{display: 'flex', alignItems: 'center'}}>
                         <Avatar>S</Avatar>
                         <Typography>{user?.name}</Typography>
-                    </Box>
 
-                    <Button variant='outlined' sx={{color: 'black'}} onClick={()=>logout()}>
+                          <Button variant='outlined' sx={{color: 'text.primary', ml:2}} onClick={()=>logout()}>
                         Logout
                     </Button>
+
+                    <IconButton onClick={toggleTheme}>{mode === 'light' ? <LightModeIcon/> : <DarkModeIcon/>}</IconButton>
+                    </Box>
+
+                  
                    
-                </Stack>
+                </Paper>
             </Toolbar>
         </AppBar>
 
