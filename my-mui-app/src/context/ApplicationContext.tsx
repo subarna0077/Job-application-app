@@ -1,11 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import type { JobApplication } from '../types/types'
+import type { JobApplication, filterStatusType } from '../types/types'
 
 
-export interface filterStatusType {
-    label: string;
-    action: ()=> void;
-}
 
 
 interface ApplicationContextType {
@@ -28,9 +24,6 @@ const applicationCount = {
     offers: 0,
     rejected: 0
 }
-
-
-
 
 const ApplicationContext = createContext<ApplicationContextType | null>(null)
 export const ApplicationContextProvider = ({ children }: { children: React.ReactNode }) => {
