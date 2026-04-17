@@ -50,3 +50,14 @@ export interface ApplicationContextType {
     filterByStatus: filterStatusType[]
 }
 
+export const registerSchema = z.object({
+  name: z.string().min(5, 'Name is required'),
+  email: z.string().min(5, 'Email is required'),
+  password: z.string().min(8, 'Password is required')
+
+})
+
+export type RegisterDataType = z.infer<typeof registerSchema>
+
+
+

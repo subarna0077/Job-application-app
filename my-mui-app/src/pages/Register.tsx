@@ -1,34 +1,33 @@
-import {Box, TextField, Button} from '@mui/material'
-import {useState} from 'react'
+import {Box, TextField, Button, Link} from '@mui/material'
 import { useUserContext } from '../context/UserContext'
+import {useForm} from 'react-hook-form'
+import {zodResolver} from '@hookform/resolvers/zod'
+import { registerSchema} from '../types/types'
+import type { RegisterDataType } from '../types/types'
+
 export const Register = () => {
   const {register} = useUserContext();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
+  const {handleSubmit, register: formRegister, reset, formState:{
+    errors
+  } } = useForm({
+    resolver: zodResolver(registerSchema)
   })
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault()
-    register(formData)
-
+  const onSubmit = (data: RegisterDataType)=>{
+    register(data)
+    reset()
   }
 
-
-
-
-
   return (
-
-    <Box component="form" onSubmit={(e)=>handleSubmit(e)} sx={{color: 'white'}}>
-      <TextField label="Name" sx={{color: 'white'}} fullWidth margin="normal" onChange={(e)=> setFormData(prev=> ({...prev, name: e.target.value}))} />
-      <TextField label="Email" type="email" fullWidth margin="normal" onChange={(e)=> setFormData(prev=> ({...prev, email: e.target.value}))} />
-      <TextField label="Password" type="password" fullWidth margin="normal" onChange={(e)=> setFormData(prev=> ({...prev, password: e.target.value}))} />
-      <Button variant="contained" type="submit">
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{color: 'white'}}>
+      <TextField error={!!errors.name} helperText={errors.name?.message} label="Name" sx={{color: 'white'}} fullWidth margin="normal" {...formRegister('name')} />
+      <TextField error={!!errors.email} helperText={errors.email?.message} label="Email" type="email" fullWidth margin="normal" {...formRegister('email')} />
+      <TextField error={!!errors.password} helperText={errors.password?.message} label="Password" type="password" fullWidth margin="normal" {...formRegister('password')} />
+      <Button variant="contained" type="submit" sx={{mr:2}}>
         Register
       </Button>
+      <Link href="/login" sx={{color: 'text.primary', textDecoration: 'none'}}>Already have an account? Login </Link>
     </Box>
     
   )
