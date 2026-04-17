@@ -1,7 +1,9 @@
-import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography, Paper, Card, Toolbar } from '@mui/material'
+import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography, Paper, Card, Toolbar, Stack, Chip, IconButton, Dialog } from '@mui/material'
 import { useState } from 'react'
 import { useApplicationContext } from '../context/ApplicationContext';
 import type { ApplicationCountByStatus } from '../context/ApplicationContext';
+import DeleteIcon from '@mui/icons-material/Delete'
+import LinkIcon from '@mui/icons-material/Link'
 
 
 const statsRow = [
@@ -21,8 +23,9 @@ export const Dashboard = () => {
   });
 
   const [activeFilter, setActiveFilter] = useState('All')
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { applications, refreshApplications, applicationCountComputed, filterByStatus } = useApplicationContext()
-  const filteredApplications = activeFilter === 'All' ? applications : applications.filter(app=> app.status === activeFilter.toLowerCase())
+  const filteredApplications = activeFilter === 'All' ? applications : applications.filter(app => app.status === activeFilter.toLowerCase())
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -48,6 +51,10 @@ export const Dashboard = () => {
     const data = await response.json();
     console.log(data)
     await refreshApplications()
+  }
+
+  const handleDialog = () => {
+    setIsDialogOpen(true);
   }
 
 
@@ -82,60 +89,78 @@ export const Dashboard = () => {
         ))}
       </Box>
 
-      <Box>
-        {filteredApplications.map(app => <Paper>
-          <Typography>{app.company}</Typography>
-          <Typography>{app.role}</Typography>
-          <Typography>{app.status}</Typography>
-        </Paper>)}
-      </Box>
+
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 2, my: 3 }}>
+        <Stack direction="column" sx={{ gap: 1 }}>
+          <Button sx={{ color: 'black', width: 'full', background: 'white' }} onClick={() => handleDialog()}>Add application</Button>
+          {filteredApplications.map(app =>
+            <Paper sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', p: 2, textAlign: 'left' }}>
+              <Stack>
+                <Typography sx={{ fontSize: '12px', fontWeight: 600, color: 'text.primary', mb: '2px' }}>{app.company}</Typography>
+                <Typography sx={{ fontSize: '10px', fontWeight: 500, color: 'text.secondary' }}>{app.role}</Typography>
+                <Typography sx={{ fontSize: '10px', color: 'text.secondary' }}>{app.appliedDate}</Typography>
+              </Stack>
+
+              <Box>
+                <Chip label={app.status} sx={{ fontSize: '12px' }} />
+                <IconButton size='small' ><DeleteIcon></DeleteIcon></IconButton>
+                <IconButton size='small' ><LinkIcon /></IconButton>
 
 
+                <IconButton></IconButton>
 
-      <Paper sx={{ maxWidth: '400px', p: 2 }}>
-        <Typography>Filter by status</Typography>
-
-        <Box sx={{ display: 'flex' }} >
-          {filterByStatus.map(({ label, action }) => (
-            <>
-              <Button onClick={()=> setActiveFilter(label)} sx={{ fontSize: '13px' }}>
-                {label}
-              </Button>
-
-              <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', height: 8, width: 8, margin: 'auto', textAlign: 'center', bgcolor: 'background.paper', fontSize: '13px', borderRadius: '5px', border: '1px solid', borderColor: 'gray' }}>
-                {label === 'All' ? applications.length : applicationCountComputed[label.toLocaleLowerCase() as keyof ApplicationCountByStatus]}
               </Box>
-            </>
-          ))}
-        </Box>
-      </Paper>
+            </Paper>)}
+        </Stack>
 
+        <Stack direction="column" sx={{ gap: 1, textAlign: 'left' }}>
+          <Typography>Filter by status</Typography>
+          {filterByStatus.map(({ label, action }) =>
 
-
-      <Box component="form" onSubmit={(e) => handleSubmit(e)}>
-        <TextField label="company" value={appliedData.company} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, company: e.target.value }))} />
-        <TextField label="Role" value={appliedData.role} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, role: e.target.value }))} />
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Status"
-            value={appliedData.status}
-            onChange={(e) => setAppliedData((prev) => ({ ...prev, status: e.target.value as string }))}
-          >
-            <MenuItem value={'applied'} >Applied</MenuItem>
-            <MenuItem value={'interview'} >Interviewing</MenuItem>
-            <MenuItem value={'offer'} >Offer</MenuItem>
-            <MenuItem value={'rejected'} >Rejected</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Button variant="contained" color="primary" type='submit'>
-          Submit
-        </Button>
+            <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+              <Typography component='button' onClick={() => setActiveFilter(label)} sx={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'text.primary' }}>{label}</Typography>
+              <Chip label={label === 'All' ? applications.length : applicationCountComputed[label.toLocaleLowerCase() as keyof ApplicationCountByStatus]}></Chip>
+            </Stack>
+          )}
+        </Stack>
 
       </Box>
+
+      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+        <Box component="form" onSubmit={(e) => handleSubmit(e)}>
+          <TextField label="company" value={appliedData.company} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, company: e.target.value }))} />
+          <TextField label="Role" value={appliedData.role} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, role: e.target.value }))} />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="Status"
+              value={appliedData.status}
+              onChange={(e) => setAppliedData((prev) => ({ ...prev, status: e.target.value as string }))}
+            >
+              <MenuItem value={'applied'} >Applied</MenuItem>
+              <MenuItem value={'interview'} >Interviewing</MenuItem>
+              <MenuItem value={'offer'} >Offer</MenuItem>
+              <MenuItem value={'rejected'} >Rejected</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Button variant="contained" color="primary" type='submit' onClick={()=> setIsDialogOpen(false)}>
+            Submit
+          </Button>
+
+        </Box>
+      </Dialog>
+
+
+
+
+
+
+
+
+
 
     </Box>
   )
