@@ -1,10 +1,10 @@
-import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Button, Typography, Paper, Card, Toolbar, Stack, Chip, IconButton, Dialog } from '@mui/material'
+import { Box, Button, Typography, Paper, Card, Toolbar, Stack, Chip, IconButton, Dialog } from '@mui/material'
 import { useState } from 'react'
 import { useApplicationContext } from '../context/ApplicationContext';
-import type { ApplicationCountByStatus } from '../context/ApplicationContext';
+import type{ ApplicationCountByStatus } from '../types/types';
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinkIcon from '@mui/icons-material/Link'
-
+import JobApplicationForm from '../components/JobApplicationForm';
 
 const statsRow = [
   { label: 'Total applied', key: 'applied', color: '#5280c9' },
@@ -15,51 +15,14 @@ const statsRow = [
 
 
 export const Dashboard = () => {
-
-  const [appliedData, setAppliedData] = useState({
-    company: '',
-    role: '',
-    status: ''
-  });
-
   const [activeFilter, setActiveFilter] = useState('All')
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { applications, refreshApplications, applicationCountComputed, filterByStatus } = useApplicationContext()
+  const { applications, applicationCountComputed, filterByStatus } = useApplicationContext()
   const filteredApplications = activeFilter === 'All' ? applications : applications.filter(app => app.status === activeFilter.toLowerCase())
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const token = localStorage.getItem('token');
-    const userID = localStorage.getItem('userId');
-
-    const response = await fetch('http://localhost:3001/posts', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ...appliedData,
-        appliedDate: new Date().toISOString(),
-        userID: userID,
-        updatedAt: null,
-      })
-
-
-    })
-
-    const data = await response.json();
-    console.log(data)
-    await refreshApplications()
-  }
 
   const handleDialog = () => {
     setIsDialogOpen(true);
   }
-
-
-
-
 
   return (
     <Box sx={{ bgcolor: 'background.default', color: 'text.primary', p: { xs: 2, md: 4 } }}>
@@ -115,7 +78,7 @@ export const Dashboard = () => {
 
         <Stack direction="column" sx={{ gap: 1, textAlign: 'left' }}>
           <Typography>Filter by status</Typography>
-          {filterByStatus.map(({ label, action }) =>
+          {filterByStatus.map(({ label }) =>
 
             <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
               <Typography component='button' onClick={() => setActiveFilter(label)} sx={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'text.primary' }}>{label}</Typography>
@@ -127,41 +90,8 @@ export const Dashboard = () => {
       </Box>
 
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <Box component="form" onSubmit={(e) => handleSubmit(e)}>
-          <TextField label="company" value={appliedData.company} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, company: e.target.value }))} />
-          <TextField label="Role" value={appliedData.role} type="text" fullWidth margin="normal" onChange={(e) => setAppliedData((prev) => ({ ...prev, role: e.target.value }))} />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Status"
-              value={appliedData.status}
-              onChange={(e) => setAppliedData((prev) => ({ ...prev, status: e.target.value as string }))}
-            >
-              <MenuItem value={'applied'} >Applied</MenuItem>
-              <MenuItem value={'interview'} >Interviewing</MenuItem>
-              <MenuItem value={'offer'} >Offer</MenuItem>
-              <MenuItem value={'rejected'} >Rejected</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Button variant="contained" color="primary" type='submit' onClick={()=> setIsDialogOpen(false)}>
-            Submit
-          </Button>
-
-        </Box>
+        <JobApplicationForm />
       </Dialog>
-
-
-
-
-
-
-
-
-
-
     </Box>
   )
 }
