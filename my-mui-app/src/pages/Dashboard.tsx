@@ -27,7 +27,7 @@ export const Dashboard = () => {
   return (
     <Box sx={{ bgcolor: 'background.default', color: 'text.primary', p: { xs: 2, md: 4 } }}>
       <Toolbar></Toolbar>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, mb: 3 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: {xs:'repeat(2, 1fr)',md: 'repeat(4,1fr)'}, gap: 2, mb: 3 }}>
         {statsRow.map(({ label, key, color }) => (
           <Card key={key} sx={{
             bgcolor: 'background.paper',   // ← surface
@@ -53,7 +53,7 @@ export const Dashboard = () => {
       </Box>
 
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 2, my: 3 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: {xs:'repeat(1,1fr)', sm: 'repeat(2,1fr)'}, gap: 2, my: 3 }}>
         <Stack direction="column" sx={{ gap: 1 }}>
           <Button sx={{ color: 'black', width: 'full', background: 'white' }} onClick={() => handleDialog()}>Add application</Button>
           {filteredApplications.map(app =>
@@ -61,7 +61,12 @@ export const Dashboard = () => {
               <Stack>
                 <Typography sx={{ fontSize: '12px', fontWeight: 600, color: 'text.primary', mb: '2px' }}>{app.company}</Typography>
                 <Typography sx={{ fontSize: '10px', fontWeight: 500, color: 'text.secondary' }}>{app.role}</Typography>
-                <Typography sx={{ fontSize: '10px', color: 'text.secondary' }}>{app.appliedDate}</Typography>
+                <Typography sx={{ fontSize: '10px', color: 'text.secondary' }}>{new Date(app.appliedDate).toLocaleDateString('en-GB', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}</Typography>
               </Stack>
 
               <Box>

@@ -3,20 +3,18 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
-import { UserContextProvider } from './context/UserContext.tsx'
 import { ApplicationContextProvider } from './context/ApplicationContext.tsx'
 import { ThemeContextProvider } from './context/ThemeContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
 <ThemeContextProvider>
   <BrowserRouter>
-    <UserContextProvider>
+   
       <ApplicationContextProvider>
         <StrictMode>
           <App />
         </StrictMode>
       </ApplicationContextProvider>
-    </UserContextProvider>
   </BrowserRouter>
   </ThemeContextProvider>
 

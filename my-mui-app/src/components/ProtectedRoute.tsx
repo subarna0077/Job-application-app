@@ -1,10 +1,11 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { useUserContext } from '../context/UserContext'
+import { useAuthStore } from '../context/userStore'
 
 export const ProtectedRoute = ({children}: {children: React.ReactNode}) => {
 
-  const {isAuthenticated, loading} = useUserContext();
+  const isAuthenticated = useAuthStore((s)=> s.isAuthenticated)
+  const loading = useAuthStore((s)=> s.loading)
 
   if(loading) {
     return <div>Loading...</div>

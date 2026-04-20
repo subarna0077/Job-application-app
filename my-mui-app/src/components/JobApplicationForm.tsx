@@ -1,7 +1,5 @@
-import React from 'react'
 import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Typography, Button } from '@mui/material'
 import { useForm, Controller } from 'react-hook-form'
-import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useApplicationContext } from '../context/ApplicationContext'
 import { schema } from '../types/types'
@@ -21,7 +19,7 @@ const JobApplicationForm = () => {
         const token = localStorage.getItem('token');
         const userID = localStorage.getItem('userId');
 
-        const response = await fetch('http://localhost:3001/posts', {
+        await fetch('http://localhost:3001/posts', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -34,6 +32,7 @@ const JobApplicationForm = () => {
                 updatedAt: null,
             })
         })
+
         await refreshApplications()
         reset();
     }

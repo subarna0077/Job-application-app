@@ -1,15 +1,17 @@
 import React from 'react'
 import { Container, AppBar, Paper, Typography, Toolbar, IconButton, Box , Avatar, Button} from '@mui/material'
 import {BookOnlineSharp} from '@mui/icons-material'
-import { useUserContext } from '../context/UserContext'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import { useThemeContext } from '../context/ThemeContext'
+import { useAuthStore } from '../context/userStore'
 
 
 
 const Layout = ({children}: {children: React.ReactNode}) => {
-    const {logout, user} = useUserContext()
+    const logout = useAuthStore(s=> s.logout)
+    const user = useAuthStore(s=> s.user)
+    console.log(user)
     const {mode, toggleTheme}= useThemeContext()
   return (
     <Container maxWidth="lg" sx={{bgcolor: 'background.default'}}>
@@ -34,8 +36,7 @@ const Layout = ({children}: {children: React.ReactNode}) => {
 
                     <IconButton onClick={toggleTheme}>{mode === 'light' ? <LightModeIcon/> : <DarkModeIcon/>}</IconButton>
                     </Box>
-
-                  
+        
                    
                 </Paper>
             </Toolbar>

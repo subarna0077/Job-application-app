@@ -1,9 +1,9 @@
 import { Box, TextField, Button , Link} from '@mui/material'
-import { useUserContext } from '../context/UserContext'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {useNavigate} from 'react-router-dom'
+import { useAuthStore } from '../context/userStore'
 
 
 
@@ -17,7 +17,7 @@ export type LoginFormType  = z.infer<typeof loginFormSchema>
 
 
 export const Login = () => {
-  const {login} =  useUserContext()
+  const login = useAuthStore((s)=> s.login)
   const { register, reset, handleSubmit, formState: {
     errors
   } } = useForm({
@@ -26,10 +26,11 @@ export const Login = () => {
 
   const navigate = useNavigate()
 
-  const onSubmit = (data: LoginFormType) => {
-    login(data)
+  const onSubmit = async(data: LoginFormType) => {
+    await login(data)
     reset()
-    navigate('/login')
+    navigate('/dashboard')
+    
     
   }
 

@@ -1,12 +1,12 @@
 import {Box, TextField, Button, Link} from '@mui/material'
-import { useUserContext } from '../context/UserContext'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { registerSchema} from '../types/types'
 import type { RegisterDataType } from '../types/types'
+import { useAuthStore } from '../context/userStore'
 
 export const Register = () => {
-  const {register} = useUserContext();
+  const register = useAuthStore((s)=> s.register)
 
   const {handleSubmit, register: formRegister, reset, formState:{
     errors

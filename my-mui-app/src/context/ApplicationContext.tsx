@@ -1,22 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import type { JobApplication, filterStatusType } from '../types/types'
-
-
-
-
-interface ApplicationContextType {
-    applications: JobApplication[];
-    refreshApplications: () => Promise<void>;
-    applicationCountComputed: ApplicationCountByStatus;
-    filterByStatus: filterStatusType[]
-}
-
-export interface ApplicationCountByStatus {
-    applied: number;
-    interview: number;
-    offers: number;
-    rejected: number;
-}
+import type { JobApplication, filterStatusType, ApplicationContextType,ApplicationCountByStatus } from '../types/types'
 
 const applicationCount = {
     applied: 0,
