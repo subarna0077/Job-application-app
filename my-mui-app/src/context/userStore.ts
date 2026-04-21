@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     },
 
     login: async (FormData: LoginFormType) => {
-        const response = await fetch('http://localhost:3001/login', {
+        const response = await fetch(`${API_BASE_URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(FormData)

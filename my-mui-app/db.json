@@ -41,6 +41,18 @@
       "password": "$2a$10$DBUFvk.pToYzcZb5sIPrseHkr/HL37CymX31cESCcPA0rPoatflwa",
       "name": "Subarna",
       "id": 8
+    },
+    {
+      "email": "haryjohnson2@gmail.com",
+      "password": "$2a$10$1Cs.5Y9e48iUlMbpJreumOezYp3KNe54A1FxSC9X5H4OPiYXcN4KC",
+      "name": "Subarna Sapkota",
+      "id": 9
+    },
+    {
+      "email": "suraj@gmail.com",
+      "password": "$2a$10$Vp1p3UZCtu..i7nb.7OV6OhODtF3E7mnBwNnK1HxomQRDPQRwTI5a",
+      "name": "Subarna Sapkota",
+      "id": 10
     }
   ],
   "posts": [
@@ -236,6 +248,51 @@
       "userID": "8",
       "updatedAt": null,
       "id": 22
+    },
+    {
+      "company": "xyz",
+      "role": "sr dev",
+      "status": "applied",
+      "appliedDate": "2026-04-17T05:16:55.180Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 23
+    },
+    {
+      "company": "bajra technologies",
+      "role": "jr frontend dev",
+      "status": "applied",
+      "appliedDate": "2026-04-17T05:57:18.233Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 24
+    },
+    {
+      "company": "bajra technologies",
+      "role": "jr frontend dev",
+      "status": "applied",
+      "appliedDate": "2026-04-17T05:58:05.520Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 25
+    },
+    {
+      "company": "ssssds",
+      "role": "sshdshdsh",
+      "status": "applied",
+      "appliedDate": "2026-04-17T08:40:01.165Z",
+      "userID": "8",
+      "updatedAt": null,
+      "id": 26
+    },
+    {
+      "company": "sumansapkota0099@gmail.com",
+      "role": "dshddsh",
+      "status": "applied",
+      "appliedDate": "2026-04-20T05:43:13.087Z",
+      "userID": "9",
+      "updatedAt": null,
+      "id": 27
     }
   ]
 }
