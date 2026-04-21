@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { LoginFormType } from '../pages/Login';
 import type { RegisterDataType } from '../types/types';
+import { API_BASE_URL } from '../config/api';
 
 interface User {
     id: string;
