@@ -1,4 +1,27 @@
 {
-  "users": [],
-  "posts": []
+  "users": [
+    {
+      "email": "subh@gmail.com",
+      "password": "$2a$10$Bc9glQUFp/ZTZKptKVSNBefu7ff8MBtWI/S.j5zqxfgqsiXixnpfq",
+      "name": "Subarna Sapkota",
+      "id": 1
+    },
+    {
+      "email": "suraj@gmail.com",
+      "password": "$2a$10$TK8JnGEwRPBpEKfV/ipw6Om7FTqAubimFNCxAkyn8fG.OMqCP9Lsq",
+      "name": "sdhsh",
+      "id": 2
+    }
+  ],
+  "posts": [
+    {
+      "company": "sumansapkota0099@gmail.com",
+      "role": "dshdds",
+      "status": "applied",
+      "appliedDate": "2026-04-21T13:14:47.589Z",
+      "userID": "10",
+      "updatedAt": null,
+      "id": 1
+    }
+  ]
 }
