@@ -4,7 +4,7 @@
     "buildCommand": "npm install --omit=dev"
   },
   "deploy": {
-    "startCommand": "npx json-server --watch db.json --port $PORT --host 0.0.0.0",
+    "startCommand": "npx json-server-auth db.json --port $PORT --host 0.0.0.0",
     "restartPolicyType": "ON_FAILURE"
   }
 }
