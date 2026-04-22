@@ -1,51 +1,8 @@
 {
   "users": [
-    {
-      "email": "subh@gmail.com",
-      "password": "$2a$10$Bc9glQUFp/ZTZKptKVSNBefu7ff8MBtWI/S.j5zqxfgqsiXixnpfq",
-      "name": "Subarna Sapkota",
-      "id": 1
-    },
-    {
-      "email": "suraj@gmail.com",
-      "password": "$2a$10$TK8JnGEwRPBpEKfV/ipw6Om7FTqAubimFNCxAkyn8fG.OMqCP9Lsq",
-      "name": "sdhsh",
-      "id": 2
-    },
-    {
-      "email": "haryjohnson2@gmail.com",
-      "password": "$2a$10$aooi.0LkcDWyEex.6kh6e.cpOMmr3kjitIhUrVPWWgCZtEtAEm/8u",
-      "name": "Subarna Sapkota",
-      "id": 3
-    }
+   
   ],
   "posts": [
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "dshdds",
-      "status": "applied",
-      "appliedDate": "2026-04-21T13:14:47.589Z",
-      "userID": "10",
-      "updatedAt": null,
-      "id": 1
-    },
-    {
-      "company": "Fintech solutions",
-      "role": "Er Jr dev",
-      "status": "applied",
-      "appliedDate": "2026-04-22T03:59:57.171Z",
-      "userID": "2",
-      "updatedAt": null,
-      "id": 2
-    },
-    {
-      "company": "Nepal can move",
-      "role": "Sales manager",
-      "status": "applied",
-      "appliedDate": "2026-04-22T04:00:42.559Z",
-      "userID": "2",
-      "updatedAt": null,
-      "id": 3
-    }
+    
   ]
 }
