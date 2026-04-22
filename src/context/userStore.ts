@@ -63,6 +63,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         }
         else {
             alert("failed to login")
+            console.log(API_BASE_URL)
         }
     },
 
