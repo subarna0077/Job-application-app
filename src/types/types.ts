@@ -27,27 +27,20 @@ export interface JobApplication {
     role: string;
     appliedDate: string;
     status: 'applied' |'interview' | 'offer' | 'rejected'
-    updatedAt: string;
-}
-
-
-export interface filterStatusType {
-    label: string;
-    action: ()=> void;
+    updatedAt: string | null;
 }
 
 export interface ApplicationCountByStatus {
     applied: number;
     interview: number;
-    offers: number;
+    offer: number;
     rejected: number;
 }
 
 export interface ApplicationContextType {
     applications: JobApplication[];
-    refreshApplications: () => Promise<void>;
-    applicationCountComputed: ApplicationCountByStatus;
-    filterByStatus: filterStatusType[]
+    createApp: (data: FormInputType)=> void;
+    deleteApp: (id: string) => void;
 }
 
 export const registerSchema = z.object({

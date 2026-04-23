@@ -4,13 +4,12 @@ import {BookOnlineSharp} from '@mui/icons-material'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import { useThemeContext } from '../context/ThemeContext'
-import { useAuthStore } from '../context/userStore'
+import { useUserContext } from '../context/UserContext'
 
 
 
 const Layout = ({children}: {children: React.ReactNode}) => {
-    const logout = useAuthStore(s=> s.logout)
-    const user = useAuthStore(s=> s.user)
+    const {logout, user} = useUserContext()
     console.log(user)
     const {mode, toggleTheme}= useThemeContext()
   return (
