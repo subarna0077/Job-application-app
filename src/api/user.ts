@@ -10,7 +10,6 @@ export const login = async (FormData: LoginFormType) => {
     })
     const data = await response.json()
     return data
-    console.log(data)
 
 };
 
