@@ -12,7 +12,6 @@ export const createApplication = async (userData: FormInputType) => {
             userID: userId,
             appliedDate: new Date().toISOString(),
             updatedAt: null
-
         })
     })
 
@@ -25,8 +24,7 @@ export const removeApplication = async (id: string) => {
 }
 
 export const fetchApplication = async (userID: string) => {
-        const response = await fetch(`http://localhost:3001/posts?userID=${userID}`)
-        const data = await response.json()
-        return data;
-       
-    }
+    const response = await fetch(`http://localhost:3001/posts?userID=${userID}`)
+    const data = await response.json()
+    return data;
+}
