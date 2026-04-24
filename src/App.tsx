@@ -26,12 +26,8 @@ import {useEffect} from 'react'
 
 
 function App() {
-  const initialize = useAuthStore(set=> set.initialize)
-
-  useEffect(()=>{
-    initialize()
-  })
-
+  
+ 
   return (
       <AppRouter />
   )
