@@ -54,7 +54,8 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
         onSuccess: (responseData) => {
             localStorage.setItem('token', responseData.accessToken)
             localStorage.setItem('name', responseData.user.name),
-            localStorage.setItem('email', responseData.user.email)
+            localStorage.setItem('email', responseData.user.email),
+            localStorage.setItem('userId', responseData.user.id)
             setIsAuthenticated(true)
             setUser(responseData.user)
             navigate('/dashboard')

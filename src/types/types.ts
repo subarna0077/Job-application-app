@@ -7,7 +7,6 @@ export interface User {
     password: string;
 }
 
-
 export const schema = z.object({
     company: z.string().min(5, 'Company is required'),
     role: z.string().min(5, 'Please enter the specific role'),
@@ -37,12 +36,32 @@ export interface ApplicationCountByStatus {
     rejected: number;
 }
 
-export interface ApplicationContextType {
-    applications: JobApplication[];
-    createApp: (data: FormInputType)=> void;
-    deleteApp: (id: string) => void;
+interface sortOptionType {
+    label: string;
+    action: ()=> void;
 }
 
+export interface ApplicationContextType {
+  applications: JobApplication[]
+
+  // mutations
+  createApp: (data: FormInputType) => void
+  deleteApp: (id: string) => void
+
+  // UI state
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+
+  activeFilter: string
+  setActiveFilter: React.Dispatch<React.SetStateAction<string>>
+
+  sortBy: string
+  setSortBy: React.Dispatch<React.SetStateAction<string>>
+
+  // optional but useful
+  isLoading: boolean
+  isError: boolean
+}
 export const registerSchema = z.object({
   name: z.string().min(5, 'Name is required'),
   email: z.string().min(5, 'Email is required'),

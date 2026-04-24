@@ -5,14 +5,14 @@ import { API_BASE_URL } from '../config/api'
 const applicationCount: ApplicationCountByStatus = {
   applied: 0,
   interview: 0,
-  offers: 0,
+  offer: 0,
   rejected: 0
 }
 
 interface ApplicationStore {
   applications: JobApplication[]
   activeFilter: string
-  fetchApplications: () => Promise<void>
+  fetchApplications: (id: string) => Promise<void>
   addApplication: (data: Omit<JobApplication, 'id' | 'userId'>) => Promise<void>
   updateApplication: (id: string, data: Partial<JobApplication>) => Promise<void>
   deleteApplication: (id: string) => Promise<void>

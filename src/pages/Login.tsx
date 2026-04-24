@@ -11,12 +11,8 @@ const loginFormSchema = z.object({
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
 
-
-
 export const Login = () => {
-
   const {loginUser} = useUserContext()
-
 
   const { register, reset, handleSubmit, formState: {
     errors

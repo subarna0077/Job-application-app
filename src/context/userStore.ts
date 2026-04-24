@@ -17,7 +17,7 @@ interface AuthStore {
     register: (data: RegisterDataType) => Promise<void>;
     loading: boolean;
     initialize: () => void;
-
+    
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -48,6 +48,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         })
 
         const data = await response.json()
+        console.log(data)
 
         if (response.ok) {
             localStorage.setItem('token', data.accessToken)
