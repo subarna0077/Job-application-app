@@ -3,8 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../types/types'
 import type { FormInputType } from '../types/types'
-import { useUserContext } from '../context/UserContext'
-import { useApplicationContext } from '../context/ApplicationContext'
+import { useCreatePosts } from '../hooks/useCreatePosts'
 
 
 const JobApplicationForm = () => {
@@ -13,11 +12,15 @@ const JobApplicationForm = () => {
         errors
     } } = useForm({ resolver: zodResolver(schema) })
 
-    const { createApp } = useApplicationContext()
-    const onSubmit = (data: FormInputType) => {    
-        createApp(data)
+    const {mutate: createPost, isPending, error} = useCreatePosts()
+
+    const onSubmit = (data: FormInputType) => { 
+        createPost(data) 
         reset();
+        
     }
+
+    console.log(isPending, error)
 
 
     return (
