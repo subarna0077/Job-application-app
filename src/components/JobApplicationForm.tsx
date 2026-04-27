@@ -2,11 +2,15 @@ import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Typography, 
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from '../types/types'
-import type { FormInputType } from '../types/types'
+import type { FormInputType, JobApplication } from '../types/types'
 import { useCreatePosts } from '../hooks/useCreatePosts'
+import { useEditPost } from '../hooks/useEditPost'
+import {useEffect} from 'react'
 
 
-const JobApplicationForm = () => {
+const JobApplicationForm = ({initialData}: {initialData? : JobApplication}) => {
+
+    const {mutate: editPost} = useEditPost()
 
     const { handleSubmit, register, reset, control, formState: {
         errors
@@ -15,10 +19,20 @@ const JobApplicationForm = () => {
     const {mutate: createPost, isPending, error} = useCreatePosts()
 
     const onSubmit = (data: FormInputType) => { 
+        if(initialData) {
+            editPost({id: initialData.id, data})    
+        } else {
         createPost(data) 
+
+        }
         reset();
         
     }
+
+    useEffect(()=>{
+        if(initialData) reset(initialData)
+
+    }, [initialData])
 
     console.log(isPending, error)
 

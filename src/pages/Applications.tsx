@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGetPosts } from '../hooks/useGetPosts'
 import { useDeletePost } from '../hooks/useDeletePost'
 import { useAppStore } from '../features/applications/stores'
+import type { FormInputType, JobApplication } from '../types/types'
 import {
   Box,
   Typography,
@@ -88,7 +89,7 @@ function StatusChip({ status }: { status: Status }) {
 }
 
 // ─── Add Application Modal ────────────────────────────────────────────────────
-function AddApplicationModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+function AddApplicationModal({ title, open, onClose, data }: {title: string, open: boolean; onClose: () => void, data: JobApplication | null }) {
 
   return (
     <Dialog
@@ -100,18 +101,26 @@ function AddApplicationModal({ open, onClose }: { open: boolean; onClose: () => 
       BackdropProps={{ sx: { bgcolor: "#00000070" } }}
     >
       <DialogTitle sx={{ fontWeight: 700, fontSize: 16, color: t.text, pb: 0 }}>
-        Add Application
+        {title}
       </DialogTitle>
 
       <DialogContent sx={{ pt: "18px !important", display: "flex", flexDirection: "column", gap: "14px" }}>
-        <JobApplicationForm />
+        <JobApplicationForm initialData = {data} />
       </DialogContent>
     </Dialog>
   )
 }
 // ─── Row action menu (··· button) ─────────────────────────────────────────────
-function RowMenu({ appId, onDelete }: { appId: string, onDelete: (id: string) => void }) {
+function RowMenu({ appId, onDelete, initialData }: { appId: string, onDelete: (id: string) => void, initialData: JobApplication}) {
   const [anchor, setAnchor] = useState<null | HTMLElement>(null)
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleEdit = ()=> {
+    setModalOpen(true)
+    setAnchor(null)
+  }
+
+
 
   return (
     <>
@@ -126,7 +135,7 @@ function RowMenu({ appId, onDelete }: { appId: string, onDelete: (id: string) =>
         PaperProps={{ sx: { bgcolor: t.surface, border: `1px solid ${t.border2}`, borderRadius: "10px", minWidth: 140, boxShadow: "0 8px 32px #00000060" } }}
       >
         {/* TODO: onClick → open edit modal with this appId's data */}
-        <MenuItem onClick={() => setAnchor(null)} sx={{ fontSize: 13, color: t.text2, gap: 1, "&:hover": { bgcolor: t.border, color: t.text } }}>
+        <MenuItem onClick={() => handleEdit()} sx={{ fontSize: 13, color: t.text2, gap: 1, "&:hover": { bgcolor: t.border, color: t.text } }}>
           <Edit fontSize="small" /> Edit
         </MenuItem>
         {/* TODO: onClick → call delete mutation with appId */}
@@ -134,6 +143,9 @@ function RowMenu({ appId, onDelete }: { appId: string, onDelete: (id: string) =>
           <Delete fontSize="small" /> Delete
         </MenuItem>
       </Menu>
+
+      <AddApplicationModal title="Edit application" open={modalOpen} onClose={() => setModalOpen(false)} data={initialData} />
+
     </>
   )
 }
@@ -149,6 +161,7 @@ export const Applications = () => {
   const [search, setSearch] = useState('');
   const { mutate: deletePost } = useDeletePost()
   console.log(activeFilter)
+
 
   const filteredApplications = () => {
     const matchesFilter = applications.filter(app => activeFilter === 'All' ? true : app.status === activeFilter)
@@ -269,7 +282,7 @@ export const Applications = () => {
                     <Typography sx={{ fontSize: 13, fontWeight: 500, color: t.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                       {app.role}
                     </Typography>
-                    <Typography sx={{ fontSize: 11, color: t.text3 }}>Infotech</Typography>
+                    <Typography sx={{ fontSize: 11, color: t.text3 }}>{app.company}</Typography>
                   </Box>
                 </Box>
               </TableCell>
@@ -292,7 +305,7 @@ export const Applications = () => {
               {/* Actions menu */}
               {/* TODO: row click → navigate(`/applications/${app.id}`) */}
               <TableCell align="right">
-                <RowMenu appId={app.id} onDelete={deletePost} />
+                <RowMenu appId={app.id} onDelete={deletePost} initialData={app} />
               </TableCell>
             </TableRow>)}
 
@@ -311,7 +324,7 @@ export const Applications = () => {
       </TableContainer>
 
       {/* ── Add Application Modal ── */}
-      <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <AddApplicationModal title="Add application" open={modalOpen} onClose={() => setModalOpen(false)} data={null}  />
     </Box>
   )
 }
