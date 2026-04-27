@@ -1,6 +1,6 @@
 import { AppRouter } from './router/AppRouter'
-import { useAuthStore } from './context/userStore'
 import {useEffect} from 'react'
+import { useAuthStore } from './features/user/stores'
 //Implement the theme
 // Complete the dashboard
 // Work on the dataflow

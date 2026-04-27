@@ -2,7 +2,10 @@ import { Box, TextField, Button, Link } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useUserContext } from '../context/UserContext'
+import {useNavigate} from 'react-router-dom'
+import {useEffect} from 'react'
+import { useLogin } from '../hooks/useLogin'
+import { useAuthStore } from '../features/user/stores'
 
 const loginFormSchema = z.object({
   email: z.string().min(5, 'Email is required'),
@@ -12,7 +15,12 @@ const loginFormSchema = z.object({
 export type LoginFormType = z.infer<typeof loginFormSchema>
 
 export const Login = () => {
-  const {loginUser} = useUserContext()
+  const navigate = useNavigate()
+  const {mutate:login, error, data} = useLogin()
+  console.log(data)
+
+  const isAuthenticated = useAuthStore((state)=> state.isAuthenticated)
+  
 
   const { register, reset, handleSubmit, formState: {
     errors
@@ -21,8 +29,12 @@ export const Login = () => {
   })
 
   const onSubmit =  (data: LoginFormType) => {
-    loginUser(data)
+    login(data)
   }
+
+  useEffect(()=>{
+    if(isAuthenticated) navigate('/dashboard')
+  },[isAuthenticated])
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -31,6 +43,7 @@ export const Login = () => {
       <Button variant="contained" type="submit" sx={{ mr: 2 }}>
         Login
       </Button>
+      {error ? <p>{error?.message}</p>: ''}
       <Link href="/register" sx={{ color: 'text.primary', textDecoration: 'none' }}>Don't have an account? Register </Link>
     </Box>
   )

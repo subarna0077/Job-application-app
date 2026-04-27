@@ -43,11 +43,6 @@ interface sortOptionType {
 
 export interface ApplicationContextType {
   applications: JobApplication[]
-
-  // mutations
-  createApp: (data: FormInputType) => void
-  deleteApp: (id: string) => void
-
   // UI state
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
@@ -58,9 +53,6 @@ export interface ApplicationContextType {
   sortBy: string
   setSortBy: React.Dispatch<React.SetStateAction<string>>
 
-  // optional but useful
-  isLoading: boolean
-  isError: boolean
 }
 export const registerSchema = z.object({
   name: z.string().min(5, 'Name is required'),

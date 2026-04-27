@@ -1,12 +1,14 @@
 import React from 'react'
 import { Typography, Box, Avatar, Button, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Icon, Dialog, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import { Sort, Add, GridView, Assignment, Settings } from '@mui/icons-material'
+import { GridView, Assignment, Settings } from '@mui/icons-material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { ROUTES } from '../router/RouteConfig'
-import { useUserContext } from '../context/UserContext'
 import JobApplicationForm from './JobApplicationForm'
-import { useApplicationContext } from '../context/ApplicationContext'
+import { useAuthStore } from '../features/user/stores'
+import { useAppStore } from '../features/applications/stores'
+import type { SortBy } from '../features/applications/stores'
+
 
 // layout is: sidebar + topbar and render content inside
 
@@ -15,14 +17,12 @@ import { useApplicationContext } from '../context/ApplicationContext'
 const Layout = ({ children }: { children: React.ReactNode }) => {
 
     const name = localStorage.getItem('name')
-    const { logout } = useUserContext()
+    const logout  = useAuthStore(set=> set.logout)
     const navigate = useNavigate()
     const location = useLocation()
     const currentRoute = ROUTES.find((route) => location.pathname.startsWith(route.path))
     const [openModal, setOpenModal] = useState(false)
-    console.log(currentRoute)
-    const { setSortBy, sortBy } = useApplicationContext()
-
+    const {setSortBy, sortBy} = useAppStore()
     // returns {path: '/dashboard', title: 'Dashboard'}
 
     const NAV_ITEMS = [
@@ -30,6 +30,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         { icon: <Assignment fontSize="small" />, label: "Applications", badge: 12, path: '/applications' },
         { icon: <Settings fontSize="small" />, label: "Settings", badge: 0, path: '/settings' }
     ];
+
+
 
 
     function Sidebar() {
@@ -94,12 +96,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
                                     fontWeight: 500
 
-                                }}
+                            }}
                             >
                                 <ListItemIcon sx={{ minWidth: 0, color: "inherit" }}>{item.icon}</ListItemIcon>
                                 <ListItemText
                                     primary={item.label}
-                                    primaryTypographyProps={{ fontSize: 13.5, fontWeight: "inherit", color: "inherit" }}
                                 />
                                 {item.badge > 0 && (
                                     <Box
@@ -175,9 +176,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                                 <InputLabel>Sort</InputLabel>
 
                                 <Select
-                                    value={sortBy}
+                                value={sortBy}
+                                onChange={(e)=> setSortBy(e.target.value as SortBy )}
+                                   
                                     label="Sort by"
-                                    onChange={(e) => setSortBy(e.target.value)}
                                 >
                                     <MenuItem value="A-Z">A-Z</MenuItem>
                                     <MenuItem value="Date">Date</MenuItem>

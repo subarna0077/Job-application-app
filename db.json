@@ -1,153 +1,64 @@
 {
   "users": [
     {
-      "email": "subh@gmail.com",
-      "password": "$2a$10$Bc9glQUFp/ZTZKptKVSNBefu7ff8MBtWI/S.j5zqxfgqsiXixnpfq",
-      "name": "Subarna Sapkota",
+      "email": "test@gmail.com",
+      "password": "$2a$10$ZkXv5Bq7Ljq0YlZPfZQu5uzk/yX34nXdf6XQo60cPNuOdZyt60iAe",
+      "name": "test user",
       "id": 1
     },
     {
-      "email": "suraj@gmail.com",
-      "password": "$2a$10$TK8JnGEwRPBpEKfV/ipw6Om7FTqAubimFNCxAkyn8fG.OMqCP9Lsq",
-      "name": "sdhsh",
+      "email": "sumansapkota0099@gmail.com",
+      "password": "$2a$10$mDgBHSf6r9WXy/VJUkmb8.q0WOaQc84A.mkPObREKzgpqUd9WAJ0K",
+      "name": "Subarna Sapkota",
       "id": 2
     },
     {
-      "email": "haryjohnson2@gmail.com",
-      "password": "$2a$10$aooi.0LkcDWyEex.6kh6e.cpOMmr3kjitIhUrVPWWgCZtEtAEm/8u",
-      "name": "Subarna Sapkota",
+      "email": "testing@gmail.com",
+      "password": "$2a$10$GDIK9nNA4GfERWbjMTRMw.yGgFWLIFwREccqX6nMtAOiykNcYZEYu",
+      "name": "Test user",
       "id": 3
-    },
-    {
-      "email": "sumansapkota0099@gmail.com",
-      "password": "$2a$10$qLrd96nN3crtrncfctKaQuX8vaAyp4JsSbJ7v4MhmQy26fUXBP/Y.",
-      "name": "Subarna Sapkota",
-      "id": 4
-    },
-    {
-      "email": "hello@gmail.com",
-      "password": "$2a$10$jfWGNpyVkQAP40VPPCRPDu6qp3pvt1Cvf6mbbXZPMTJoaCJxhrdL2",
-      "name": "Subarna Sapkota",
-      "id": 5
     }
   ],
   "posts": [
     {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Erhdsdsh",
+      "company": "Fintech solutions",
+      "role": "Frontend Engineer",
       "status": "applied",
-      "appliedDate": "2026-04-22T09:14:45.337Z",
-      "userId": "2",
-      "updatedAt": null,
+      "appliedDate": "2026-04-26T19:46:46.796Z",
+      "userID": 3,
       "id": 1
-    },
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Erhdsdsh",
-      "status": "applied",
-      "userID": null,
-      "appliedDate": "2026-04-24T07:58:03.177Z",
-      "updatedAt": null,
-      "id": 2
-    },
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Erhdsdsh",
-      "status": "applied",
-      "userID": null,
-      "appliedDate": "2026-04-24T07:58:24.264Z",
-      "updatedAt": null,
-      "id": 3
-    },
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Erhdsdsh",
-      "status": "applied",
-      "userID": null,
-      "appliedDate": "2026-04-24T08:21:22.233Z",
-      "updatedAt": null,
-      "id": 4
-    },
-    {
-      "company": "Fintech solutions",
-      "role": "dshdh",
-      "status": "interview",
-      "userID": null,
-      "appliedDate": "2026-04-24T08:21:50.185Z",
-      "updatedAt": null,
-      "id": 5
-    },
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Er junior",
-      "status": "applied",
-      "userID": null,
-      "appliedDate": "2026-04-24T08:52:33.142Z",
-      "updatedAt": null,
-      "id": 6
-    },
-    {
-      "company": "sumansapkota0099@gmail.com",
-      "role": "Er junior",
-      "status": "interview",
-      "userID": null,
-      "appliedDate": "2026-04-24T08:59:38.179Z",
-      "updatedAt": null,
-      "id": 7
-    },
-    {
-      "company": "Fintech solutions",
-      "role": "Er junior",
-      "status": "applied",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:24:31.633Z",
-      "updatedAt": null,
-      "id": 8
     },
     {
       "company": "Nepal can move",
       "role": "Frontend Engineer",
-      "status": "applied",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:24:42.223Z",
-      "updatedAt": null,
-      "id": 9
-    },
-    {
-      "company": "National Enterprise",
-      "role": "Junior QA",
-      "status": "applied",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:29:10.488Z",
-      "updatedAt": null,
-      "id": 10
-    },
-    {
-      "company": "Infotech Developers",
-      "role": "Django Intern",
       "status": "interview",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:29:50.148Z",
-      "updatedAt": null,
-      "id": 11
+      "appliedDate": "2026-04-26T19:47:09.169Z",
+      "userID": 3,
+      "id": 2
     },
     {
-      "company": "Beam Labs Pvt.Ltd",
-      "role": "Frontend trainee",
+      "company": "Fintech solutions",
+      "role": "Frontend Engineer",
+      "status": "applied",
+      "appliedDate": "2026-04-26T20:39:21.609Z",
+      "userID": 2,
+      "id": 4
+    },
+    {
+      "company": "Fintech solutions",
+      "role": "Frontend Engineer",
       "status": "offer",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:30:54.347Z",
-      "updatedAt": null,
-      "id": 12
+      "appliedDate": "2026-04-27T06:16:11.003Z",
+      "userID": 2,
+      "id": 5
     },
     {
-      "company": "Infosis Tech",
-      "role": "Frontend engineering",
-      "status": "rejected",
-      "userID": "3",
-      "appliedDate": "2026-04-24T11:31:17.796Z",
-      "updatedAt": null,
-      "id": 13
+      "company": "Qniverse",
+      "role": "QA developer",
+      "status": "interview",
+      "appliedDate": "2026-04-27T06:16:37.032Z",
+      "userID": 2,
+      "id": 6
     }
   ]
 }

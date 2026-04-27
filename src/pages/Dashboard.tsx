@@ -5,10 +5,9 @@ import LinkIcon from '@mui/icons-material/Link'
 import JobApplicationForm from '../components/JobApplicationForm';
 import { useGetPosts } from '../hooks/useGetPosts';
 import { useDeletePost } from '../hooks/useDeletePost';
-import type { JobApplication } from '../types/types';
-
 
 const statsRow = [
+  {label: 'All', key: 'all', color: '' },
   { label: 'Total applied', key: 'applied', color: '#5280c9' },
   { label: 'Interview', key: 'interview', color: '#e69f26' },
   { label: 'Offers', key: 'offer', color: '#34ba64' },
@@ -16,23 +15,36 @@ const statsRow = [
 ]
 
 export const Dashboard = () => {
-  const [activeFilter, setActiveFilter] = useState('applied')
+  const [activeFilter, setActiveFilter] = useState('all')
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleDialog = () => {
     setIsDialogOpen(true);
   }
 
-  const { data: applications=[] } = useGetPosts()
-  console.log(applications)
+  const { data: applications = [] } = useGetPosts()
+  
+  const filteredApplications = activeFilter === 'all' ? applications: applications.filter(app=> app.status === activeFilter)
+  
+  const statValues = {
+    all: applications.length,
+    applied: applications.filter(app=> app.status === 'applied').length,
+    interview: applications.filter(app=> app.status === 'interview').length,
+    offer: applications.filter(app=> app.status === 'offer').length,
+    rejected: applications.filter(app=> app.status === 'rejected').length
 
-  const {mutate: deletePost, data} = useDeletePost()
-  console.log(data)
+  }
 
-  const storageVal = localStorage.getItem('auth-storage') || ''
-  const { user } = JSON.parse(storageVal)
-  console.log('Parsed value', user)
+  const statFilter = {
+    all: applications,
+    applied: applications.filter(app=> app.status === 'applied'),
+    interview: applications.filter(app=> app.status === 'interview'),
+    offer: applications.filter(app=> app.status === 'offer'),
+    rejected: applications.filter(app=> app.status === 'rejected')
+  }
 
+  const { mutate: deletePost, data } = useDeletePost()
+  
 
 
   return (
@@ -57,6 +69,7 @@ export const Dashboard = () => {
               {label}
             </Typography>
             <Typography sx={{ fontFamily: '"Syne", sans-serif', fontSize: { sm: 16, md: 22, lg: 28 }, fontWeight: { sm: 400, md: 800 }, color }}>
+              {statValues[statKey as keyof typeof statValues ]}
 
 
             </Typography>
@@ -64,11 +77,12 @@ export const Dashboard = () => {
         ))}
       </Box>
 
-      {applications.map(app =>
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1,1fr)', sm: 'repeat(2,1fr)' }, gap: 2, my: 3 }}>
-          <Stack direction="column" sx={{ gap: 1 }}>
-            <Button sx={{ color: 'black', width: 'full', background: 'white' }} onClick={() => handleDialog()}>Add application</Button>
-            <Paper sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', p: 2, textAlign: 'left' }}>
+
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(1,1fr)', sm: 'repeat(2,1fr)' }, gap: 2, my: 3 }}>
+        <Stack direction="column" sx={{ gap: 1 }}>
+          <Button sx={{ color: 'black', width: 'full', background: 'white' }} onClick={() => handleDialog()}>Add application</Button>
+          {
+            filteredApplications.map(app => <Paper sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', p: 2, textAlign: 'left' }}>
               <Stack>
                 <Typography sx={{ fontSize: '12px', fontWeight: 600, color: 'text.primary', mb: '2px' }}>{app.role}</Typography>
                 <Typography sx={{ fontSize: '10px', fontWeight: 500, color: 'text.secondary' }}>{app.company}</Typography>
@@ -82,29 +96,28 @@ export const Dashboard = () => {
 
               <Box>
                 <Chip label={app.status} sx={{ fontSize: '12px' }} />
-                <IconButton size='small' onClick={()=>deletePost(app.id)} ><DeleteIcon></DeleteIcon></IconButton>
+                <IconButton size='small' onClick={() => deletePost(app.id)} ><DeleteIcon></DeleteIcon></IconButton>
                 <IconButton size='small' ><LinkIcon /></IconButton>
 
 
                 <IconButton></IconButton>
 
               </Box>
-            </Paper>
-          </Stack>
+            </Paper>)
+          }
 
-          <Stack direction="column" sx={{ gap: 1, textAlign: 'left' }}>
-            <Typography>Filter by status</Typography>
-            {statsRow.map(({ label, key }) =>
-              <Stack id={label} direction="row" sx={{ justifyContent: 'space-between' }}>
-                <Typography component='button' onClick={() => setActiveFilter(key)} sx={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'text.primary' }}>{key.toUpperCase()}</Typography>
-              </Stack>
-            )}
-          </Stack>
-        </Box>
+        </Stack>
 
-
-      )}
-
+        <Stack direction="column" sx={{ gap: 1, textAlign: 'left' }}>
+          <Typography>Filter by status</Typography>
+          {statsRow.map(({ label, key }) =>
+            <Stack id={label} direction="row" sx={{ justifyContent: 'space-between' }}>
+              <Typography component='button' onClick={()=> setActiveFilter(key)} sx={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'text.primary' }}>{key.toUpperCase()}</Typography>
+              <Typography>{statValues[key as keyof typeof statValues]}</Typography>
+            </Stack>
+          )}
+        </Stack>
+      </Box>
 
       <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <JobApplicationForm />

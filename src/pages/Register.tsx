@@ -3,10 +3,10 @@ import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { registerSchema} from '../types/types'
 import type { RegisterDataType } from '../types/types'
-import { useAuthStore } from '../context/userStore'
-
+import { useRegister } from '../hooks/useRegister'
 export const Register = () => {
-  const register = useAuthStore((s)=> s.register)
+
+  const {mutate: register} = useRegister()
 
   const {handleSubmit, register: formRegister, reset, formState:{
     errors

@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useGetPosts } from '../hooks/useGetPosts'
+import { useDeletePost } from '../hooks/useDeletePost'
+import { useAppStore } from '../features/applications/stores'
 import {
   Box,
   Typography,
@@ -15,16 +18,14 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
   Button,
-  Select,
   MenuItem,
-  FormLabel,
   Menu,
 } from '@mui/material'
 import { Search, MoreHoriz, Add, Edit, Delete } from '@mui/icons-material'
-import { useApplicationContext } from '../context/ApplicationContext'
 import JobApplicationForm from '../components/JobApplicationForm'
+
+
 
 // ─── Design tokens (import from your tokens.ts) ────────────────────────────────
 const t = {
@@ -109,7 +110,7 @@ function AddApplicationModal({ open, onClose }: { open: boolean; onClose: () => 
   )
 }
 // ─── Row action menu (··· button) ─────────────────────────────────────────────
-function RowMenu({ appId, onDelete }: { appId: string; onDelete: (id: string) => void }) {
+function RowMenu({ appId, onDelete }: { appId: string, onDelete: (id: string) => void }) {
   const [anchor, setAnchor] = useState<null | HTMLElement>(null)
 
   return (
@@ -139,34 +140,46 @@ function RowMenu({ appId, onDelete }: { appId: string; onDelete: (id: string) =>
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export const Applications = () => {
-  const {
-    applications,
-    search,
-    sortBy,
-    setSearch,
-    activeFilter,
-    setActiveFilter,
-    deleteApp
-  } = useApplicationContext()
 
   const [modalOpen, setModalOpen] = useState(false)
+  const { sortBy } = useAppStore()
 
-  const filteredValue = applications.filter(
-    (app) => {
-      const matchesSelection = activeFilter === 'All' || app.status === activeFilter
-      const matchesSearch = app.role.toLowerCase().includes(search.toLowerCase()) || app.company.toLowerCase().includes(search.toLowerCase())
+  const { data: applications = [] } = useGetPosts()
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [search, setSearch] = useState('');
+  const { mutate: deletePost } = useDeletePost()
+  console.log(activeFilter)
 
-      return matchesSearch && matchesSelection
+  const filteredApplications = () => {
+    const matchesFilter = applications.filter(app => activeFilter === 'All' ? true : app.status === activeFilter)
+    const matchesSearch = applications.filter(app => app.role.toLowerCase().includes(search.toLowerCase()) || app.company.toLowerCase().includes(search.toLowerCase()))
+
+
+    // Here we want the intersection
+
+    /* 
+    If matches filter return a,b,d
+    and if matchesSearch return b, d, e
+    then the filter will show b,d
+
+    that is include everything in a that also lies in b
+
+    */
+
+    const filtered = matchesFilter.filter(app => matchesSearch.includes(app))
+    if (sortBy === 'Date') {
+      filtered.sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
     }
-  )
 
-  if (sortBy === 'A-Z') {
-    filteredValue.sort((a, b) => a.role.localeCompare(b.role))
+    if (sortBy === 'A-Z') {
+      filtered.sort((a, b) => a.role.localeCompare(b.role))
+    }
+
+    return filtered;
+
   }
 
-  if (sortBy === 'Date') {
-    filteredValue.sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
-  }
+  const filtered = filteredApplications()
 
 
 
@@ -177,9 +190,10 @@ export const Applications = () => {
       <Box sx={{ display: "flex", gap: 1, mb: 2, alignItems: "center", flexWrap: "wrap" }}>
         <TextField
           placeholder="Search company or role..."
-          size="small"
+          onChange={(e) => setSearch(e.target.value)}
           value={search}
-          onChange={(e) => setSearch(e.target.value)} // TODO 4: hook into filter logic
+          size="small"
+          // TODO 4: hook into filter logic
           sx={{
             flex: 1, minWidth: 180,
             "& .MuiOutlinedInput-root": { bgcolor: t.surface, borderRadius: "8px", fontSize: 13, color: t.text2, "& fieldset": { borderColor: t.border2 }, "&:hover fieldset": { borderColor: t.muted }, "&.Mui-focused fieldset": { borderColor: t.accent } },
@@ -191,13 +205,14 @@ export const Applications = () => {
         {FILTER_CHIPS.map(chip => (
           <Box
             key={chip}
-            onClick={() => setActiveFilter(chip)} // TODO 3: this already sets state, just wire up filtered list above
+            onClick={() => setActiveFilter(chip)}
+            // TODO 3: this already sets state, just wire up filtered list above
             component="span"
             sx={{
               px: "12px", py: "6px", borderRadius: "8px", fontSize: 12, fontWeight: 500, cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-              border: `1px solid ${activeFilter === chip ? t.accent : t.border2}`,
-              bgcolor: activeFilter === chip ? t.accentDim : t.surface,
-              color: activeFilter === chip ? t.accent2 : t.text2,
+              border: `1px solid ${true ? t.accent : t.border2}`,
+              bgcolor: true ? t.accentDim : t.surface,
+              color: true ? t.accent2 : t.text2,
               "&:hover": { borderColor: t.accent, color: t.accent2 },
             }}
           >
@@ -233,62 +248,64 @@ export const Applications = () => {
 
           <TableBody>
             {/* TODO: show skeleton rows here when isLoading is true */}
-            {filteredValue.map((app) => (
-              <TableRow
-                key={app.id}
-                hover
-                sx={{
-                  cursor: "pointer",
-                  "& td": { border: "none", py: "10px", px: "12px" },
-                  "&:hover": { bgcolor: t.surface },
-                }}
-              >
-                {/* Role + Company */}
-                <TableCell>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <Avatar sx={{ width: 30, height: 30, bgcolor: app.logoBg, color: app.logoColor, fontSize: 12, fontWeight: 700, borderRadius: "8px", flexShrink: 0 }}>
-                      {app.company.slice(0, 1)}
-                    </Avatar>
-                    <Box sx={{ minWidth: 0 }}>
-                      <Typography sx={{ fontSize: 13, fontWeight: 500, color: t.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {app.role}
-                      </Typography>
-                      <Typography sx={{ fontSize: 11, color: t.text3 }}>{app.company}</Typography>
-                    </Box>
+
+            {filtered.map(app => <TableRow
+              key={app.id}
+              hover
+              sx={{
+                cursor: "pointer",
+                "& td": { border: "none", py: "10px", px: "12px" },
+                "&:hover": { bgcolor: t.surface },
+              }}
+            >
+              {/* Role + Company */}
+
+              <TableCell>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <Avatar sx={{ width: 30, height: 30, fontSize: 12, fontWeight: 700, borderRadius: "8px", flexShrink: 0 }}>
+                    {app.role.slice(0, 1)}
+                  </Avatar>
+                  <Box sx={{ minWidth: 0 }}>
+                    <Typography sx={{ fontSize: 13, fontWeight: 500, color: t.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {app.role}
+                    </Typography>
+                    <Typography sx={{ fontSize: 11, color: t.text3 }}>Infotech</Typography>
                   </Box>
-                </TableCell>
+                </Box>
+              </TableCell>
 
-                {/* Applied date */}
-                <TableCell>
-                  <Typography sx={{ fontSize: 13, color: t.text2 }}>{app.appliedDate}</Typography>
-                </TableCell>
+              {/* Applied date */}
+              <TableCell>
+                <Typography sx={{ fontSize: 13, color: t.text2 }}>{app.appliedDate}</Typography>
+              </TableCell>
 
-                {/* Status */}
-                <TableCell>
-                  <StatusChip status={app.status} />
-                </TableCell>
+              {/* Status */}
+              <TableCell>
+                <StatusChip status={app.status} />
+              </TableCell>
 
-                {/* Updated */}
-                <TableCell>
-                  <Typography sx={{ fontSize: 12, color: t.text3 }}>{app.updatedAt}</Typography>
-                </TableCell>
+              {/* Updated */}
+              <TableCell>
+                <Typography sx={{ fontSize: 12, color: t.text3 }}>{app.updatedAt}</Typography>
+              </TableCell>
 
-                {/* Actions menu */}
-                {/* TODO: row click → navigate(`/applications/${app.id}`) */}
-                <TableCell align="right">
-                  <RowMenu appId={app.id} onDelete={deleteApp} />
-                </TableCell>
-              </TableRow>
-            ))}
+              {/* Actions menu */}
+              {/* TODO: row click → navigate(`/applications/${app.id}`) */}
+              <TableCell align="right">
+                <RowMenu appId={app.id} onDelete={deletePost} />
+              </TableCell>
+            </TableRow>)}
+
+
 
             {/* TODO: show empty state when filtered.length === 0 */}
-            {filteredValue.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={5} sx={{ border: "none", textAlign: "center", py: 6 }}>
-                  <Typography sx={{ color: t.text3, fontSize: 14 }}>No applications found</Typography>
-                </TableCell>
-              </TableRow>
-            )}
+
+            <TableRow>
+              <TableCell colSpan={5} sx={{ border: "none", textAlign: "center", py: 6 }}>
+                <Typography sx={{ color: t.text3, fontSize: 14 }}>No applications found</Typography>
+              </TableCell>
+            </TableRow>
+
           </TableBody>
         </Table>
       </TableContainer>
