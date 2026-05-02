@@ -14,7 +14,7 @@ import type { SortBy } from '../features/applications/stores'
 
 
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }: { children: React.ReactNode }) => {
 
     const name = localStorage.getItem('name')
     const logout  = useAuthStore(set=> set.logout)
@@ -150,24 +150,22 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <Box sx={{ height: '100vh', overflow: 'hidden' }}>
+        <Box sx={{ height: '100vh', display:'flex' }}>
             <Sidebar />
-            <Box sx={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: 'hidden', ml: '220px' }}>
+            <Box sx={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: 'hidden' }}>
                 <Box
                     sx={{
                         px: 3,
                         py: "14px",
-
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "space-between",
-
-                        flexShrink: 0,   // prevents topbar from shrinking
+                        overflow: 'hidden',
+                        flexShrink: 0,
+                        // flexShrink: 0,   // prevents topbar from shrinking
                     }}
                 >
                     <Typography sx={{ fontSize: 17, fontWeight: 700 }}>
                         {currentRoute?.title}
-
                     </Typography>
                     <Box sx={{ display: "flex", gap: 2 }}>
                         {currentRoute?.path == '/applications' &&
@@ -209,4 +207,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-export default Layout
+
