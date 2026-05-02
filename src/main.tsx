@@ -10,26 +10,19 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
-      retry: 2
+      retry: false
     }
   }
 })
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <ThemeContextProvider>
-     
-      <BrowserRouter>
-         
+    <ThemeContextProvider>    
+      <BrowserRouter>      
             <StrictMode>
               <App />
             </StrictMode>
-        
-
-
       </BrowserRouter>
-   
-
     </ThemeContextProvider>
   </QueryClientProvider>
 

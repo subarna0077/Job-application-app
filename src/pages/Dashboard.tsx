@@ -8,10 +8,11 @@ import { useDeletePost } from '../hooks/useDeletePost';
 
 const statsRow = [
   {label: 'All', key: 'all', color: '' },
+  {label: 'Saved', key: 'saved', color: '#3af1c0'},
   { label: 'Total applied', key: 'applied', color: '#5280c9' },
   { label: 'Interview', key: 'interview', color: '#e69f26' },
   { label: 'Offers', key: 'offer', color: '#34ba64' },
-  { label: 'Rejected', key: 'rejected', color: '#da4c4a' }
+  { label: 'Rejected', key: 'rejected', color: '#da4c4a' },
 ]
 
 export const Dashboard = () => {
@@ -25,9 +26,19 @@ export const Dashboard = () => {
   const { data: applications = [] } = useGetPosts()
   
   const filteredApplications = activeFilter === 'all' ? applications: applications.filter(app=> app.status === activeFilter)
+
+  const statFilter = {
+    all: applications,
+    saved: applications.filter(app=> app.status === 'saved'),
+    applied: applications.filter(app=> app.status === 'applied'),
+    interview: applications.filter(app=> app.status === 'interview'),
+    offer: applications.filter(app=> app.status === 'offer'),
+    rejected: applications.filter(app=> app.status === 'rejected')
+  }
   
   const statValues = {
     all: applications.length,
+    saved: applications.filter(app=> app.status === 'saved').length,
     applied: applications.filter(app=> app.status === 'applied').length,
     interview: applications.filter(app=> app.status === 'interview').length,
     offer: applications.filter(app=> app.status === 'offer').length,
@@ -35,13 +46,7 @@ export const Dashboard = () => {
 
   }
 
-  const statFilter = {
-    all: applications,
-    applied: applications.filter(app=> app.status === 'applied'),
-    interview: applications.filter(app=> app.status === 'interview'),
-    offer: applications.filter(app=> app.status === 'offer'),
-    rejected: applications.filter(app=> app.status === 'rejected')
-  }
+
 
   const { mutate: deletePost, data } = useDeletePost()
   

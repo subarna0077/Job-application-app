@@ -53,14 +53,14 @@ const STATUS_STYLES = {
   applied: { bg: "#3b82f615", color: "#60a5fa", dot: "#3b82f6" },
   offer: { bg: "#22c55e15", color: "#4ade80", dot: "#22c55e" },
   rejected: { bg: "#ef444415", color: "#f87171", dot: "#ef4444" },
-  Saved: { bg: "#94a3b815", color: "#94a3b8", dot: "#94a3b8" },
+  saved: { bg: "#94a3b815", color: "#94a3b8", dot: "#94a3b8" },
 } as const
 
 type Status = keyof typeof STATUS_STYLES
 
 // ─── Static data ───────────────────────────────────────────────────────────────
 
-const FILTER_CHIPS = ["All", "applied", "interview", "offer", "rejected"] as const
+const FILTER_CHIPS = ["All", "saved", "applied", "interview", "offer", "rejected"] as const
 type Filter = typeof FILTER_CHIPS[number]
 
 // ─── Shared input sx ───────────────────────────────────────────────────────────
@@ -152,10 +152,8 @@ function RowMenu({ appId, onDelete, initialData }: { appId: string, onDelete: (i
 
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 export const Applications = () => {
-
   const [modalOpen, setModalOpen] = useState(false)
   const { sortBy } = useAppStore()
-
   const { data: applications = [] } = useGetPosts()
   const [activeFilter, setActiveFilter] = useState('All');
   const [search, setSearch] = useState('');

@@ -69,10 +69,12 @@ const JobApplicationForm = ({initialData}: {initialData? : JobApplication}) => {
                     control={control}
                     render={({ field }) => (
                         <Select {...field} label="Status">
+                             <MenuItem value="saved">Saved</MenuItem>
                             <MenuItem value="applied">Applied</MenuItem>
                             <MenuItem value="interview">Interviewing</MenuItem>
                             <MenuItem value="offer">Offer</MenuItem>
                             <MenuItem value="rejected">Rejected</MenuItem>
+                            
                         </Select>
                     )}
                 />

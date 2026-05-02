@@ -16,8 +16,9 @@ export type LoginFormType = z.infer<typeof loginFormSchema>
 
 export const Login = () => {
   const navigate = useNavigate()
-  const {mutate:login, error, data} = useLogin()
-  console.log(data)
+  const {mutate:login, error} = useLogin()
+
+  
 
   const isAuthenticated = useAuthStore((state)=> state.isAuthenticated)
   

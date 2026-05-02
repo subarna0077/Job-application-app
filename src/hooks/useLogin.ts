@@ -6,8 +6,6 @@ import type { LoginFormType } from '../pages/Login'
 
 export const useLogin = ()=>{
     const setAuth = useAuthStore((state)=> state.setAuth)
-
-
     return useMutation({
         mutationFn: async (data: LoginFormType)=>{
             const response = await fetch(`${API_BASE_URL}/login`, {
