@@ -10,7 +10,7 @@ export interface User {
 export const schema = z.object({
     company: z.string().min(5, 'Company is required'),
     role: z.string().min(5, 'Please enter the specific role'),
-    status: z.enum(['applied', 'interview', 'offer', 'rejected'], {
+    status: z.enum(['saved','applied', 'interview', 'offer', 'rejected'], {
         error: 'Please select atleast one status'
     })
 
@@ -25,7 +25,7 @@ export interface JobApplication {
     company: string;
     role: string;
     appliedDate: string;
-    status: 'applied' |'interview' | 'offer' | 'rejected'
+    status: 'applied' |'interview' | 'offer' | 'rejected' | 'saved'
     updatedAt: string | null;
 }
 
@@ -36,10 +36,6 @@ export interface ApplicationCountByStatus {
     rejected: number;
 }
 
-interface sortOptionType {
-    label: string;
-    action: ()=> void;
-}
 
 export interface ApplicationContextType {
   applications: JobApplication[]
