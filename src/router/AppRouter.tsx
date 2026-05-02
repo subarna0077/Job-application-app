@@ -4,8 +4,10 @@ import { Register } from '../pages/Register'
 import { Dashboard } from "../pages/Dashboard"
 import { ProtectedRoute } from "../components/ProtectedRoute"
 import { Applications } from "../pages/Applications"
-import Layout from "../components/Layout"
 import { Settings } from "../pages/Settings"
+import { JobsPage } from "../features/jobs/Pages/JobsPage"
+import { Layout } from "../components/Layout"
+import { JobDetailPage } from "../features/jobs/Pages/JobDetail"
 export const AppRouter = () => {
     return (
 
@@ -30,6 +32,18 @@ export const AppRouter = () => {
             <Route path="/settings" element={<ProtectedRoute>
                 <Layout>
                     <Settings></Settings>
+                </Layout>
+            </ProtectedRoute>}>
+            </Route>
+            <Route path="/jobs" element={<ProtectedRoute>
+                <Layout>
+                    <JobsPage></JobsPage>
+                </Layout>
+            </ProtectedRoute>}>
+            </Route>
+             <Route path="/jobs/:id" element={<ProtectedRoute>
+                <Layout>
+                    <JobDetailPage></JobDetailPage>
                 </Layout>
             </ProtectedRoute>}>
             </Route>
