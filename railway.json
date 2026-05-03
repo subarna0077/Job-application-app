@@ -1,10 +1,10 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install --omit=dev"
+    "buildCommand": "npm install"
   },
   "deploy": {
-    "startCommand": "npx json-server-auth db.json --port $PORT --host 0.0.0.0",
+    "startCommand": "node server.cjs",
     "restartPolicyType": "ON_FAILURE"
   }
 }
