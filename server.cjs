@@ -86,7 +86,7 @@ app.get('/api/job-detail', async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
-    res.json(data.data)
+    res.json({jobs: data.data})
   }
   catch(error){
     res.status(500).json({error: 'Failed to fetch single job'})

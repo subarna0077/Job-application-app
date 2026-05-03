@@ -1,10 +1,10 @@
-import { Button, Select } from "@mui/material"
-import { Sort, Add } from "@mui/icons-material"
+import React from 'react'
+
 
 export type RouteConfig = {
     path: string
     title: string
-    actions?: ReactNode
+    actions?: React.ReactNode
 }
 
 export const ROUTES: RouteConfig[] = [
@@ -15,6 +15,10 @@ export const ROUTES: RouteConfig[] = [
     {
         path: "/applications",
         title: "Applications",
+    },
+    {
+        path: "/jobs",
+        title: "Jobs"
     },
     {
         path: "/settings",

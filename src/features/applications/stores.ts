@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 
- export type SortBy = 'Date' | 'A-Z'
+export type SortBy = 'Date' | 'A-Z'
 
 interface AppState {
     sortBy: SortBy,
