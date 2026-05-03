@@ -128,7 +128,11 @@ export const JobsPage = () => {
 
 
     const observer = new IntersectionObserver((entries) => {
-      console.log(entries)
+      console.log(entries[0].isIntersecting, isFetchingNextPage, hasNextPage)
+
+      if(entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage()
+      }
     }, { threshold: 0.1 })
 
     // const observer = new IntersectionObserver((entries) => {
@@ -173,17 +177,20 @@ export const JobsPage = () => {
       {/* ── Search bar ─────────────────────────────────────────────────────── */}
       <Box sx={{ display: 'flex', gap: 1.5, mb: 2, flexWrap: 'wrap', alignItems: 'center' }}>
         <TextField
+          variant="outlined"
           placeholder="Job title, keyword..."
           size="small"
           value={draftFilter.role}
           onChange={e => handleChange(e.target.value, 'role')}
           onKeyDown={e => e.key === 'Enter' && handleSearch()}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: t.text3, fontSize: 18 }} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: t.text3, fontSize: 18 }} />
+                </InputAdornment>
+              ),
+            },
           }}
           sx={{
             flex: 2, minWidth: 200,
@@ -199,17 +206,20 @@ export const JobsPage = () => {
         />
 
         <TextField
+          variant="outlined"
           placeholder="Location"
           size="small"
           value={draftFilter.location}
           onChange={e => handleChange(e.target.value, 'location')}
           onKeyDown={e => e.key === 'Enter' && handleSearch()}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnOutlinedIcon sx={{ color: t.text3, fontSize: 18 }} />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LocationOnOutlinedIcon sx={{ color: t.text3, fontSize: 18 }} />
+                </InputAdornment>
+              ),
+            },
           }}
           sx={{
             flex: 1, minWidth: 140,
@@ -421,7 +431,8 @@ export const JobsPage = () => {
 
 // 3. Add a loading indicator below the grid
       {isFetchingNextPage && (
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2, mt: 2 }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2, mt: 2 }}> 
+
           {Array.from({ length: 3 }).map((_, i) => <JobCardSkeleton key={i} />)}
         </Box>
       )}

@@ -4,7 +4,6 @@ import {
   Avatar,
   Button,
   Chip,
-  Divider,
   Stack,
   Skeleton,
   IconButton,
@@ -20,7 +19,6 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useJobDetail } from '../../../hooks/useJobDetail';
 import { useCreatePosts } from '../../../hooks/useCreatePosts';
 import type { FormInputType } from '../../../types/types';
-import {useState , useEffect} from 'react'
 
 // ─── Design tokens ─────────────────────────────────────────────────────────────
 const t = {
@@ -43,10 +41,10 @@ const t = {
 };
 
 const TYPE_COLOR: Record<string, { color: string; bg: string }> = {
-  FULLTIME:   { color: t.blue,   bg: '#3b82f615' },
-  PARTTIME:   { color: t.yellow, bg: '#eab30815' },
+  FULLTIME: { color: t.blue, bg: '#3b82f615' },
+  PARTTIME: { color: t.yellow, bg: '#eab30815' },
   CONTRACTOR: { color: t.orange, bg: '#f9731615' },
-  INTERN:     { color: t.green,  bg: t.greenDim },
+  INTERN: { color: t.green, bg: t.greenDim },
 };
 
 const TYPE_LABEL: Record<string, string> = {
@@ -83,31 +81,36 @@ export const JobDetailPage = () => {
   console.log(id)
   const location = useLocation();
 
-  const {mutate: createPost} = useCreatePosts()
-  // Use passed state first (instant), then fetch full details
+  const { mutate: createPost } = useCreatePosts()
 
   const passedJob = location.state?.job;
-  const { data: jobDetails, isPending, error } = useJobDetail(id ?? '');
+  const { data, isPending, error } = useJobDetail(id ?? '');
+  console.log(data)
 
+  if (isPending && !passedJob) return (
+    <Box sx={{ minHeight: '100vh', bgcolor: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Typography sx={{ color: t.text2 }}>Loading...</Typography>
+    </Box>
+  )
 
-  // Merge: jobDetails (full) takes priority over passedJob (partial)
-  const jobs = jobDetails ?? passedJob;
+  if (error && !passedJob) return (
+    <Box sx={{ minHeight: '100vh', bgcolor: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Typography sx={{ color: '#ef4444' }}>Failed to load job.</Typography>
+    </Box>
+  )
 
-  const [job, setJob] = useState(jobs)
-
-
-  console.log(job['0'])
+  const job = passedJob ?? data?.[0]
   const jobData = {
-    company: job['0']?.employer_name as FormInputType['company'],
-    role: job['0']?.job_title as FormInputType['role'],
+    company: job?.employer_name as FormInputType['company'],
+    role: job?.job_title as FormInputType['role'],
     status: 'saved' as FormInputType['status']
   }
 
+  console.log(jobData)
+
   const typeStyle = TYPE_COLOR[job?.job_employment_type] ?? { color: t.text2, bg: t.border };
 
-  useEffect(()=>{
-    setJob(jobs)
-  }, [])
+
 
   console.log(job)
 
@@ -173,7 +176,7 @@ export const JobDetailPage = () => {
                 </Box>
 
                 {/* Quick meta row */}
-                <Stack direction="row" flexWrap="wrap" gap={2}>
+                <Stack direction="row" sx={{flexWrap: "wrap", gap:2}}>
                   {job?.job_city && (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.6 }}>
                       <LocationOnOutlinedIcon sx={{ fontSize: 15, color: t.text3 }} />

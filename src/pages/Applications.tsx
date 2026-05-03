@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGetPosts } from '../hooks/useGetPosts'
 import { useDeletePost } from '../hooks/useDeletePost'
 import { useAppStore } from '../features/applications/stores'
-import type { FormInputType, JobApplication } from '../types/types'
+import type { JobApplication } from '../types/types'
 import {
   Box,
   Typography,
@@ -56,26 +56,11 @@ const STATUS_STYLES = {
   saved: { bg: "#94a3b815", color: "#94a3b8", dot: "#94a3b8" },
 } as const
 
-type Status = keyof typeof STATUS_STYLES
+type Status = keyof typeof STATUS_STYLES // this extract the keyos fo an object as a union type
 
-// ─── Static data ───────────────────────────────────────────────────────────────
 
-const FILTER_CHIPS = ["All", "saved", "applied", "interview", "offer", "rejected"] as const
-type Filter = typeof FILTER_CHIPS[number]
-
-// ─── Shared input sx ───────────────────────────────────────────────────────────
-const inputSx = {
-  "& .MuiOutlinedInput-root": {
-    bgcolor: "#0d0f14",
-    borderRadius: "8px",
-    fontSize: 13,
-    color: "#e2e6f3",
-    "& fieldset": { borderColor: "#2a2f42" },
-    "&:hover fieldset": { borderColor: "#3a3f52" },
-    "&.Mui-focused fieldset": { borderColor: "#6366f1" },
-  },
-  "& input::placeholder": { color: "#555c74", opacity: 1 },
-}
+const FILTER_CHIPS = ["All", "saved", "applied", "interview", "offer", "rejected"] as const 
+// as const tell ts to create a array with the fixed readonly tuple with exact literal type instead of a widened mutable array
 
 // ─── StatusChip ───────────────────────────────────────────────────────────────
 function StatusChip({ status }: { status: Status }) {
@@ -89,16 +74,20 @@ function StatusChip({ status }: { status: Status }) {
 }
 
 // ─── Add Application Modal ────────────────────────────────────────────────────
-function AddApplicationModal({ title, open, onClose, data }: {title: string, open: boolean; onClose: () => void, data: JobApplication | null }) {
+function AddApplicationModal({ title, open, onClose, data }: {title: string, open: boolean; onClose: () => void, data: JobApplication | undefined }) {
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
-      PaperProps={{
-        sx: { bgcolor: t.surface, border: `1px solid ${t.border2}`, borderRadius: "14px", boxShadow: "0 24px 60px #00000080", width: 380, m: 0 },
+      slotProps={{
+        paper: {
+          sx: { bgcolor: t.surface, border: `1px solid ${t.border2}`, borderRadius: "14px", boxShadow: "0 24px 60px #00000080", width: 380, m: 0 },
+        },
+        backdrop: {
+          sx: { bgcolor: "#00000070" },
+        },
       }}
-      BackdropProps={{ sx: { bgcolor: "#00000070" } }}
     >
       <DialogTitle sx={{ fontWeight: 700, fontSize: 16, color: t.text, pb: 0 }}>
         {title}
@@ -120,6 +109,11 @@ function RowMenu({ appId, onDelete, initialData }: { appId: string, onDelete: (i
     setAnchor(null)
   }
 
+  useEffect(()=>{
+    console.log(anchor)
+
+  }, [anchor])
+
 
 
   return (
@@ -132,7 +126,11 @@ function RowMenu({ appId, onDelete, initialData }: { appId: string, onDelete: (i
         anchorEl={anchor}
         open={Boolean(anchor)}
         onClose={() => setAnchor(null)}
-        PaperProps={{ sx: { bgcolor: t.surface, border: `1px solid ${t.border2}`, borderRadius: "10px", minWidth: 140, boxShadow: "0 8px 32px #00000060" } }}
+        slotProps={{
+          paper: {
+            sx: { bgcolor: t.surface, border: `1px solid ${t.border2}`, borderRadius: "10px", minWidth: 140, boxShadow: "0 8px 32px #00000060" },
+          },
+        }}
       >
         {/* TODO: onClick → open edit modal with this appId's data */}
         <MenuItem onClick={() => handleEdit()} sx={{ fontSize: 13, color: t.text2, gap: 1, "&:hover": { bgcolor: t.border, color: t.text } }}>
@@ -179,7 +177,7 @@ export const Applications = () => {
 
     const filtered = matchesFilter.filter(app => matchesSearch.includes(app))
     if (sortBy === 'Date') {
-      filtered.sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
+      filtered.sort((a: JobApplication, b: JobApplication) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
     }
 
     if (sortBy === 'A-Z') {
@@ -210,7 +208,7 @@ export const Applications = () => {
             "& .MuiOutlinedInput-root": { bgcolor: t.surface, borderRadius: "8px", fontSize: 13, color: t.text2, "& fieldset": { borderColor: t.border2 }, "&:hover fieldset": { borderColor: t.muted }, "&.Mui-focused fieldset": { borderColor: t.accent } },
             "& input::placeholder": { color: t.text3, opacity: 1 },
           }}
-          InputProps={{ startAdornment: <InputAdornment position="start"><Search sx={{ fontSize: 16, color: t.text3 }} /></InputAdornment> }}
+          slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search sx={{ fontSize: 16, color: t.text3 }} /></InputAdornment> } }}
         />
 
         {FILTER_CHIPS.map(chip => (
@@ -322,7 +320,7 @@ export const Applications = () => {
       </TableContainer>
 
       {/* ── Add Application Modal ── */}
-      <AddApplicationModal title="Add application" open={modalOpen} onClose={() => setModalOpen(false)} data={null}  />
+      <AddApplicationModal title="Add application" open={modalOpen} onClose={() => setModalOpen(false)} data={undefined}  />
     </Box>
   )
 }

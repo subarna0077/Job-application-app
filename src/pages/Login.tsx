@@ -31,6 +31,7 @@ export const Login = () => {
 
   const onSubmit =  (data: LoginFormType) => {
     login(data)
+    reset()
   }
 
   useEffect(()=>{

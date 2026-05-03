@@ -6,7 +6,7 @@ export const useDeletePost = ()=>{
 
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async (postId)=>{
+        mutationFn: async (postId: string)=>{
             const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
                 method: 'DELETE',
             })

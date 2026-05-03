@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { JOBS_LIST_URL } from '../config/api'
 
 export interface JobFilters {
@@ -14,7 +14,7 @@ export const useListJobs = (filters: JobFilters = {}) => {
     return useInfiniteQuery({
         initialPageParam: 1,
         queryKey: ['jobs', filters.role, filters.location, filters.datePosted, filters.employmentType, filters.remote],
-        queryFn: async ({pageParam}) => {
+        queryFn: async ({ pageParam }) => {
             const params = new URLSearchParams()
             if (filters.role) params.append("role", filters.role);
             if (filters.location) params.append("location", filters.location);
@@ -27,14 +27,13 @@ export const useListJobs = (filters: JobFilters = {}) => {
 
             const response = await fetch(`${JOBS_LIST_URL}?${params.toString()}`)
             const result = await response.json()
-            console.log('Result from frontend', result)
             if (!response.ok) throw new Error(result.message || 'Error occured')
             return result
         },
         getNextPageParam: (lastPage, allPages) => {
-    if (!lastPage.jobs || lastPage.jobs.length === 0) return undefined
-    return allPages.length + 1
-}
-      
+            if (!lastPage.jobs || lastPage.jobs.length === 0) return undefined
+            return allPages.length + 1
+        }
+
     })
 }

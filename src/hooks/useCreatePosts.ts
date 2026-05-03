@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import { API_BASE_URL } from '../config/api'
-import type { FormInputType, JobApplication } from '../types/types'
+import type { FormInputType } from '../types/types'
 import { useAuthStore } from '../features/user/stores'
 
 export const useCreatePosts = ()=>{
