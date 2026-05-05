@@ -1,13 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import { Login } from "../pages/Login"
-import { Register } from '../pages/Register'
-import { Dashboard } from "../pages/Dashboard"
+import { Login } from "../features/auth/pages/Login"
+import { Register } from "../features/auth/pages/Register"
 import { ProtectedRoute } from "../components/ProtectedRoute"
-import { Applications } from "../pages/Applications"
-import { Settings } from "../pages/Settings"
+import Applications from "../features/applications/Applications"
+import { Settings } from "../features/auth/pages/Settings"
 import { JobsPage } from "../features/jobs/Pages/JobsPage"
 import { Layout } from "../components/Layout"
 import { JobDetailPage } from "../features/jobs/Pages/JobDetail"
+import { Dashboard } from "../features/dashboard/Dashboard"
 export const AppRouter = () => {
     return (
 

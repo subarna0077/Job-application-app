@@ -1,9 +1,9 @@
 import {Box, TextField, Button, Link} from '@mui/material'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
-import { registerSchema} from '../types/types'
-import type { RegisterDataType } from '../types/types'
-import { useRegister } from '../hooks/useRegister'
+import { registerSchema } from '../../../types/types'
+import type { RegisterDataType } from '../../../types/types'
+import { useRegister } from '../../../hooks/useRegister'
 export const Register = () => {
 
   const {mutate: register} = useRegister()

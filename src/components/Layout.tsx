@@ -91,11 +91,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               >
                 <ListItemIcon sx={{ minWidth: 0, color: 'inherit' }}>{item.icon}</ListItemIcon>
                 <ListItemText
-                  primary={
-                    <Typography sx={{ fontSize: 13.5, fontWeight: 'inherit' }}>
-                      {item.label}
-                    </Typography>
-                  }
+                  primary={item.label}
+                  primaryTypographyProps={{ fontSize: 13.5, fontWeight: 'inherit' }}
                 />
                 {active && (
                   <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'primary.main', ml: 'auto' }} />
@@ -184,6 +181,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             borderRight: '1px solid',
             borderColor: 'divider',
             bgcolor: 'background.paper',
+            position: 'relative'
           },
         }}
       >
@@ -257,11 +255,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </Box>
 
-        <Dialog
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          slotProps={{ paper: { sx: { borderRadius: '16px' } } }}
-        >
+        <Dialog open={openModal} onClose={() => setOpenModal(false)} PaperProps={{ sx: { borderRadius: '16px' } }}>
           <JobApplicationForm />
         </Dialog>
       </Box>

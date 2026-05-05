@@ -2,12 +2,12 @@ import { Box, Button, Typography, Paper, Stack, Chip, IconButton } from '@mui/ma
 import { useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import LinkIcon from '@mui/icons-material/Link'
-import { useGetPosts } from '../hooks/useGetPosts'
-import { useDeletePost } from '../hooks/useDeletePost'
+import { useGetPosts } from '../../hooks/useGetPosts'
+import { useDeletePost } from '../../hooks/useDeletePost'
 import { useNavigate } from 'react-router-dom'
-import TinyBarChart from '../components/Charts'
+import TinyBarChart from '../../components/Charts'
 import { TrendingUp } from '@mui/icons-material'
-import type { DataType } from '../components/Charts'
+import type { DataType } from '../../components/Charts'
 
 const STATUS_CONFIG = {
   saved:     { label: 'Saved',      color: '#6366f1' },

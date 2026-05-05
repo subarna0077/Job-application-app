@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useGetPosts } from '../hooks/useGetPosts'
-import { useDeletePost } from '../hooks/useDeletePost'
-import { useAppStore } from '../features/applications/stores'
-import type { JobApplication } from '../types/types'
+import { useGetPosts } from '../../hooks/useGetPosts'
+import { useDeletePost } from '../../hooks/useDeletePost'
+import { useAppStore } from './stores'
+import type { JobApplication } from '../../types/types'
+import JobApplicationForm from '../../components/JobApplicationForm'
 import {
   Box,
   Typography,
@@ -24,7 +25,6 @@ import {
   Menu,
 } from '@mui/material'
 import { Search, MoreHoriz, Add, Edit, Delete } from '@mui/icons-material'
-import JobApplicationForm from '../components/JobApplicationForm'
 
 
 

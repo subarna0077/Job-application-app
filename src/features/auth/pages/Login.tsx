@@ -4,8 +4,8 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {useNavigate} from 'react-router-dom'
 import {useEffect} from 'react'
-import { useLogin } from '../hooks/useLogin'
-import { useAuthStore } from '../features/user/stores'
+import { useLogin } from '../../../hooks/useLogin'
+import { useAuthStore } from '../../user/stores'
 
 const loginFormSchema = z.object({
   email: z.string().min(5, 'Email is required'),
