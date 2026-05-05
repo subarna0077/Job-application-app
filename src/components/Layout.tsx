@@ -9,7 +9,7 @@ import { GridView, Assignment, Settings, SearchOff, Add, Menu as MenuIcon } from
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ROUTES } from '../router/RouteConfig'
 import JobApplicationForm from './JobApplicationForm'
-import { useAuthStore } from '../features/user/stores'
+import { useAuthStore } from '../features/auth/stores'
 import { useAppStore } from '../features/applications/stores'
 import type { SortBy } from '../features/applications/stores'
 
@@ -92,8 +92,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 <ListItemIcon sx={{ minWidth: 0, color: 'inherit' }}>{item.icon}</ListItemIcon>
                 <ListItemText
                   primary={item.label}
-                  primaryTypographyProps={{ fontSize: 13.5, fontWeight: 'inherit' }}
-                />
+                   sx={{ '& .MuiListItemText-primary': { fontSize: 13.5, fontWeight: 'inherit' } }}                />
                 {active && (
                   <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: 'primary.main', ml: 'auto' }} />
                 )}
@@ -255,7 +254,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </Box>
 
-        <Dialog open={openModal} onClose={() => setOpenModal(false)} PaperProps={{ sx: { borderRadius: '16px' } }}>
+        <Dialog open={openModal} onClose={() => setOpenModal(false)} slotProps={{ paper: { sx: { borderRadius: '16px' } } }}>
           <JobApplicationForm />
         </Dialog>
       </Box>

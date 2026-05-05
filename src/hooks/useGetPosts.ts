@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query'
 import { API_BASE_URL } from '../config/api'
-import { useAuthStore } from '../features/user/stores'
+import { useAuthStore } from '../features/auth/stores'
 import type { JobApplication } from '../types/types'
 
 

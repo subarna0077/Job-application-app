@@ -285,7 +285,7 @@ export const Applications = () => {
 
               {/* Applied date */}
               <TableCell>
-                <Typography sx={{ fontSize: 13, color: t.text2 }}>{app.appliedDate}</Typography>
+                <Typography sx={{ fontSize: 13, color: t.text2 }}>{new Date(app.appliedDate).toLocaleDateString()}</Typography>
               </TableCell>
 
               {/* Status */}
@@ -295,7 +295,7 @@ export const Applications = () => {
 
               {/* Updated */}
               <TableCell>
-                <Typography sx={{ fontSize: 12, color: t.text3 }}>{app.updatedAt}</Typography>
+                <Typography sx={{ fontSize: 12, color: t.text3 }}>{!app.updatedAt ? null : new Date(app.updatedAt).toLocaleDateString()}</Typography>
               </TableCell>
 
               {/* Actions menu */}

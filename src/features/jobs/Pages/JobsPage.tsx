@@ -426,10 +426,8 @@ export const JobsPage = () => {
         </Box>
       )}
 
-      // 2. Give the sentinel actual height so it's not already visible
       <Box ref={sentinelRef} sx={{ height: 20 }} />
 
-// 3. Add a loading indicator below the grid
       {isFetchingNextPage && (
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: '1fr 1fr 1fr' }, gap: 2, mt: 2 }}> 
 

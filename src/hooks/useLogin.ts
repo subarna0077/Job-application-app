@@ -1,8 +1,7 @@
 import {useMutation} from '@tanstack/react-query'
-import { useAuthStore } from '../features/user/stores'
+import { useAuthStore } from '../features/auth/stores'
 import { API_BASE_URL } from '../config/api'
-import type { LoginFormType } from '../pages/Login'
-
+import type{ LoginFormType } from '../features/auth/pages/Login'
 
 export const useLogin = ()=>{
     const setAuth = useAuthStore((state)=> state.setAuth)
