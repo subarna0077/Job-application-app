@@ -309,11 +309,16 @@ export const Applications = () => {
 
             {/* TODO: show empty state when filtered.length === 0 */}
 
-            <TableRow>
+            {filtered.length === 0 && (
+                 <TableRow>
               <TableCell colSpan={5} sx={{ border: "none", textAlign: "center", py: 6 }}>
                 <Typography sx={{ color: t.text3, fontSize: 14 }}>No applications found</Typography>
               </TableCell>
             </TableRow>
+            )
+              }
+
+         
 
           </TableBody>
         </Table>
