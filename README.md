@@ -18,6 +18,15 @@ A full-stack job search and application tracking app built with React, TypeScrip
 
 ---
 
+## Screenshots
+
+![Jobs Page](./public/screenshots/jobs.png)
+![Application Tracker](./public/screenshots/applications.png)
+![Dashboard](./public/screenshots/dashboard.png)
+![Job details](./public/screenshots/job-details.png)
+
+---
+
 ## Tech Stack
 
 ### Frontend
@@ -161,7 +170,6 @@ npm run server    # Backend on http://localhost:3001
 ## What I'd Add Next
 
 - [ ] Notes and interview date fields on tracked applications
-- [ ] Sort and filter on the application tracker dashboard
 - [ ] Email reminders for application follow-ups
 - [ ] Migrate from json-server to PostgreSQL + Prisma for production-grade persistence
 
